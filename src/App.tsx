@@ -1,5 +1,9 @@
+import TrainingPage from "./pages/TrainingPage/TrainingPage";
+
 const App = () => {
-  return <h1>test</h1>;
+  return <div>
+    <TrainingPage/>
+  </div>
 };
 
 export default App;
