@@ -1,5 +1,11 @@
+import PackagePage from "./pages/PackagePage";
+
 const App = () => {
-  return <h1>test</h1>;
+  return (
+    <div>
+      <PackagePage />
+    </div>
+  );
 };
 
 export default App;
