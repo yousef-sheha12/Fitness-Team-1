@@ -1,11 +1,11 @@
-import PackagePage from "./pages/PackagePage";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/router";
 
 const App = () => {
   return (
-    <div>
-      <PackagePage />
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 };
-
 export default App;
