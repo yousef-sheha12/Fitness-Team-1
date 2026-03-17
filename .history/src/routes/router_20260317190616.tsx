@@ -9,6 +9,7 @@ import ContactUs from "@/pages/contact/ContactUs";
 import Login from "@/pages/auth/Login";
 import MainLayout from "@/layouts/MainLayout";
 import { Home } from "@/pages/home/Home";
+>>>>>>> 43b3cfd72bb0e7ea9f3e3bbd8615f471dbfaed93
 
 export const router = createBrowserRouter([
   {
