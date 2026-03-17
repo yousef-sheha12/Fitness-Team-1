@@ -30,7 +30,7 @@ export default function SignUp() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <InputField
             label="Name"
-            placeholder="Your name"
+            placeholder="Enter your name"
             register={register("name")}
             error={errors.name}
             icon={<User size={16} />}
@@ -45,7 +45,7 @@ export default function SignUp() {
           />
           <InputField
             label="Password"
-            placeholder="Your password"
+            placeholder="Enter your password"
             type="password"
             register={register("password")}
             error={errors.password}
