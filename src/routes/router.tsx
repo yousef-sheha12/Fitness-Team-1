@@ -1,5 +1,4 @@
 // router.tsx
-import { Home } from "@/pages/home/Home";
 import { createBrowserRouter } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import Trainers from "@/pages/trainers/Trainers";
@@ -8,41 +7,49 @@ import PrivateRoute from "./PrivateRoute";
 import Booking from "@/pages/booking/Booking";
 import ContactUs from "@/pages/contact/ContactUs";
 import Login from "@/pages/auth/Login";
+import MainLayout from "@/layouts/MainLayout";
+import { Home } from "@/pages/home/Home";
 
 export const router = createBrowserRouter([
-    {
-        path: "/",
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
         element: <Home />,
-    },
-    {
-        path: "/auth",
-        element: <PublicRoute />,
-        children: [
-            { path: "login", element: <Login /> },
-            // { path: "signup", element: <SignUp /> },
-            // { path: "forgot-password", element: <ForgotPassword /> },
-            // { path: "info", element: <Info /> },
-        ],
-    },
-    {
-        path: "/trainers",
+      },
+      {
+        path: "trainers",
         element: <Trainers />,
-    },
-    {
-        path: "/trainer/:id",
+      },
+      {
+        path: "trainer/:id",
         // element: <TrainerProfile />,
-    },
-    {
-        path: "/packages",
+      },
+      {
+        path: "packages",
         element: <Packages />,
-    },
-    {
-        path: "/booking",
-        element: <PrivateRoute />, // هنا في المستقبل تحمي الصفحة
-        children: [{ path: "", element: <Booking /> }],
-    },
-    {
-        path: "/contact-us",
+      },
+      {
+        path: "contact-us",
         element: <ContactUs />,
-    },
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <PublicRoute />,
+    children: [
+      { path: "login", element: <Login /> },
+      // { path: "signup", element: <SignUp /> },
+      // { path: "forgot-password", element: <ForgotPassword /> },
+      // { path: "info", element: <Info /> },
+    ],
+  },
+  {
+    path: "/booking",
+    element: <PrivateRoute />, // هنا في المستقبل تحمي الصفحة
+    children: [{ path: "", element: <Booking /> }],
+  },
 ]);
