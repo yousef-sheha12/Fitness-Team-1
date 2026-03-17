@@ -1,4 +1,5 @@
 import { MapPin, Star } from "lucide-react";
+import Button from "./Button";
 
 interface TrainerCardProps {
   image: string;
@@ -53,9 +54,7 @@ export default function TrainerCard({
           <MapPin size={16} className="text-(--main-color)" />
           <span className="text-(--white-color)">{location}</span>
         </div>
-        <button className="w-full h-11 bg-(--main-color) text-white font-semibold rounded-lg hover:opacity-90 transition">
-          View Profile →
-        </button>
+        <Button text=" View Profile →" />
       </div>
     </div>
   );
