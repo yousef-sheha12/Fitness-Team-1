@@ -11,7 +11,7 @@ export default function TrainerInfo() {
 <div>
 <h3>Ahmed Mohamed </h3>
 <ul>
-    <li className="px-2 py-1 bg-black text-white rounded-md relative ">Weight Loss Coach</li>
+    <li className="px-2 py-1 bg-black text-white rounded-md relative :b">Weight Loss Coach</li>
 </ul>
 </div>
         </div>

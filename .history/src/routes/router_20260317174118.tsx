@@ -1,4 +1,5 @@
 // router.tsx
+
 import { createBrowserRouter } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import Trainers from "@/pages/trainers/Trainers";
