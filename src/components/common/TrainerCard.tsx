@@ -1,6 +1,5 @@
-import { MapPin, Star } from "lucide-react";
+import { ArrowRight, MapPin, Star } from "lucide-react";
 import Button from "./Button";
-
 interface TrainerCardProps {
   image: string;
   name: string;
@@ -55,6 +54,7 @@ export default function TrainerCard({
           <span className="text-(--white-color)">{location}</span>
         </div>
         <Button text=" View Profile →" />
+        <Button text="View Profile" icon={<ArrowRight size={16} />} type="submit" />
       </div>
     </div>
   );
