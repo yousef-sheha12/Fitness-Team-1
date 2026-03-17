@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @theme {
   --color-blue-900: #014162;
 }
@@ -81,6 +81,20 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+
+
+
+
+
+
+  /* COLORS */
+  --main-color: #FF4D4D;
+  --darkMain-color: #FF4D4D33;
+  --white-color: #E8E8E8;
+  --gray-color: #A7A7A7;
+  --secondary-gray: #3D3D3D;
+  --darkGrey-color: #3A3A3A;
+  --lightGrey-color: #2D2D2D;
 }
 
 .dark {
