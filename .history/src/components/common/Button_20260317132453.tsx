@@ -4,6 +4,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
 }
+
 export default function Button({
   text,
   width = "w-full",
