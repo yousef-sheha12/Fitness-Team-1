@@ -1,12 +1,11 @@
-import { BrowserRouter } from "react-router-dom";
-// import SignUp from "./pages/Auth/SignUp";
-import Login from "./pages/Auth/Login";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/router";
+
 const App = () => {
   return (
-    <BrowserRouter>
-     <Login />
-    </BrowserRouter>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 };
-
 export default App;
