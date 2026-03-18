@@ -10,6 +10,10 @@ import MainLayout from "@/layouts/MainLayout";
 import { Home } from "@/pages/home/Home";
 import SignUp from "@/pages/Auth/SignUp";
 import Login from "@/pages/Auth/Login";
+import ForgotPassword from "@/pages/Auth/ForgotPass";
+import Verify from "@/pages/Auth/Verify";
+import ResetPass from "@/pages/Auth/ResetPass";
+import Info from "@/pages/Auth/Info";
 
 export const router = createBrowserRouter([
   {
@@ -42,10 +46,12 @@ export const router = createBrowserRouter([
     path: "/auth",
     element: <PublicRoute />,
     children: [
-      { path: "login", element: <Login /> },
       { path: "signup", element: <SignUp /> },
-      // { path: "forgot-password", element: <ForgotPassword /> },
-      // { path: "info", element: <Info /> },
+      { path: "login", element: <Login /> },
+      { path: "forgot-password", element: <ForgotPassword /> },
+      { path: "verify", element: <Verify /> },
+      { path: "reset-password", element: <ResetPass /> },
+      { path: "info", element: <Info /> },
     ],
   },
   {

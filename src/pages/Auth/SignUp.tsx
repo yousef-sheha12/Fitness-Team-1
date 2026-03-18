@@ -2,10 +2,10 @@ import AuthLayout from "@/components/layout/AuthLayout";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, type signUpFormData } from "@/lib/schemas/signup.schema";
-import InputField from "@/components/Auth/SignUp/InputField";
+import InputField from "@/components/Auth/InputField";
 import { Mail, User, Lock } from "lucide-react";
 import Button from "@/components/common/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
 
 export default function SignUp() {
@@ -20,6 +20,7 @@ export default function SignUp() {
   const onSubmit = (data: signUpFormData) => {
     console.log(data);
   };
+
 
   return (
     <AuthLayout>
@@ -51,12 +52,12 @@ export default function SignUp() {
             error={errors.password}
             icon={<Lock size={16} />}
           />
-          <Button text="Sign Up" type="submit" />
+          <Button text="Sign Up" type="submit" onClick={() => navigate("/")} />
         </form>
         <p className="font-bold text-(--white-color) flex justify-center items-center gap-2">
           Already have an account?
           <Link
-            to="/login"
+            to="/auth/login"
             className="text-(--main-color) hover:opacity-80 transition underline">
             Login
           </Link>
