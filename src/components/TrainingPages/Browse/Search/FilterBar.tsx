@@ -8,7 +8,7 @@ import SearchInp from "./SearchInp/SearchInp";
 const FilterBar = () => {
   return (
     <div className=" lg:h-[380px] ">
-      <div className="container mx-auto text-white ">
+      <div className="container mx-auto text-white px-8 ">
         <div className="mb-[66px]">
           <p className="fw-bold text-[40px] ">Browse Trainers</p>
           <p className="text-[24px]">
@@ -17,7 +17,7 @@ const FilterBar = () => {
         </div>
 
         {/* Search */}
-        <div className="flex flex-wrap mt-[40px] justify-between mt-[46px] mb-3 lg:">
+        <div className="flex flex-wrap mx-auto  justify-between mt-[46px] mb-3 lg:">
           <SearchInp />
 
           {/* Filter */}
