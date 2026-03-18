@@ -1,8 +1,6 @@
 // router.tsx
 import { createBrowserRouter } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
-import Trainers from "@/pages/trainers/Trainers";
-import PrivateRoute from "./PrivateRoute";
 import Booking from "@/pages/booking/Booking";
 import ContactUs from "@/pages/contact/ContactUs";
 import MainLayout from "@/layouts/MainLayout";
@@ -16,6 +14,7 @@ import Info from "@/pages/auth/Info";
 import PackagePage from "@/pages/PackagePage";
 import StripeWrapper from "@/pages/booking/StripeWrapper";
 
+import TrainingPage from "@/pages/TrainingPage/TrainingPage";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +27,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "trainers",
-        element: <Trainers />,
+        element: <TrainingPage />,
       },
       {
         path: "trainer/:id",
@@ -45,12 +44,16 @@ export const router = createBrowserRouter([
       {
         path: "/booking",
         // element: <PrivateRoute />,
-        children: [{
-          path: "", element:
-            <StripeWrapper>
-              <Booking />
-            </StripeWrapper>
-        }],
+        children: [
+          {
+            path: "",
+            element: (
+              <StripeWrapper>
+                <Booking />
+              </StripeWrapper>
+            ),
+          },
+        ],
       },
     ],
   },
@@ -66,5 +69,4 @@ export const router = createBrowserRouter([
       { path: "info", element: <Info /> },
     ],
   },
-
 ]);

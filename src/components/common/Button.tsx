@@ -46,7 +46,8 @@ export default function Button({
       disabled={disabled}
       aria-label={ariaLabel ?? text}
       style={shadowStyle}
-      className={`${width} mt-4 flex items-center justify-center gap-2 rounded-md py-3 font-bold transition disabled:cursor-not-allowed disabled:opacity-50 ${variantClasses} ${className}`}>
+      className={`${width} mt-4 flex items-center justify-center gap-2 rounded-md py-3 font-bold transition disabled:cursor-not-allowed disabled:opacity-50 ${variantClasses} ${className}`}
+    >
       {icon && iconPosition === "left" ? icon : null}
       {text ? <span>{text}</span> : null}
       {icon && iconPosition === "right" ? icon : null}
