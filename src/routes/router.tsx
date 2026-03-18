@@ -5,16 +5,15 @@ import Booking from "@/pages/booking/Booking";
 import ContactUs from "@/pages/contact/ContactUs";
 import MainLayout from "@/layouts/MainLayout";
 import { Home } from "@/pages/home/Home";
+import PackagePage from "@/pages/PackagePage";
+import TrainingPage from "@/pages/TrainingPage/TrainingPage";
+import StripeWrapper from "@/pages/booking/StripeWrapper";
 import SignUp from "@/pages/auth/SignUp";
 import Login from "@/pages/auth/Login";
 import ForgotPassword from "@/pages/auth/ForgotPass";
 import Verify from "@/pages/auth/Verify";
 import ResetPass from "@/pages/auth/ResetPass";
 import Info from "@/pages/auth/Info";
-import PackagePage from "@/pages/PackagePage";
-import StripeWrapper from "@/pages/booking/StripeWrapper";
-
-import TrainingPage from "@/pages/TrainingPage/TrainingPage";
 
 export const router = createBrowserRouter([
   {
