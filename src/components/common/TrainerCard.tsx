@@ -17,44 +17,49 @@ export default function TrainerCard({
   location,
 }: TrainerCardProps) {
   return (
-    <div className="bg-(--lightGrey-color) rounded-2xl overflow-hidden w-90">
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-2xl bg-card">
       <div className="relative">
         <img
           src={image}
           alt={name}
           className="w-full h-72 object-cover object-top"
         />
-        <span className="absolute top-3 right-3 backdrop-blur-sm text-white text-sm font-semibold px-3 py-1.5 rounded-md flex items-center gap-1.5">
-          <Star size={14} className="text-(--main-color) fill-(--main-color)" />
+        <span className="absolute top-3 right-3 backdrop-blur-sm text-white text-sm font-semibold px-3 py-1.5 rounded-md flex items-center gap-1.5 bg-gray-800/30">
+          <Star size={14} className="text-primary fill-primary" />
           {rating}
         </span>
       </div>
 
-      <div className="p-4 flex flex-col gap-3">
+      <div className="flex flex-1 flex-col gap-3 p-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-white font-bold text-lg">{name}</h3>
+          <h3 className="text-white font-bold text-lg leading-tight">{name}</h3>
           <p className="text-sm">
-            <span className="text-(--main-color) font-bold">EGP {price}</span>
-            <span className="text-(--white-color)"> /session</span>
+            <span className="text-primary font-bold">EGP {price}</span>
+            <span className="text-white"> /session</span>
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex min-h-21 flex-wrap content-start gap-2">
           {specialties.map((s) => (
             <span
               key={s}
-              className="text-sm text-(--gray-color) bg-(--secondary-gray) rounded-4xl px-2 ">
+              className="text-sm text-white bg-[#3d3d3d] rounded-4xl px-2 py-1 font-light"
+            >
               {s}
             </span>
           ))}
         </div>
 
-        <div className="flex items-center gap-2 text-(--gray-color) text-sm">
-          <MapPin size={16} className="text-(--main-color)" />
-          <span className="text-(--white-color)">{location}</span>
+        <div className="flex items-center gap-2 text-white text-sm">
+          <MapPin size={16} className="text-primary" />
+          <span className="text-white">{location}</span>
         </div>
-        <Button text=" View Profile →" />
-        <Button text="View Profile" icon={<ArrowRight size={16} />} type="submit" />
+        <Button
+          className="mt-auto"
+          text="View Profile"
+          icon={<ArrowRight size={16} />}
+          type="submit"
+        />
       </div>
     </div>
   );

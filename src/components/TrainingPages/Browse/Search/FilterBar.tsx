@@ -1,12 +1,13 @@
-import { Input } from "@/components/ui/input";
-import { Funnel, ArrowUpDown, Search, X } from "lucide-react";
-import FilterElemnts from "../Filter/FilterElemnts";
-import { filteritems, items } from "@/lib/constants/PageTraning";
+import { filteritems } from "@/lib/constants/PageTraning";
 import { Button } from "@/components/ui/button";
+import SortElemnts from "./Filter/SortElemnts";
+import { X } from "lucide-react";
+import FilterElemnts from "./Filter/FilterElemnts";
+import SearchInp from "./SearchInp/SearchInp";
 
 const FilterBar = () => {
   return (
-    <div className="bg-[#121212] lg:h-[380px] ">
+    <div className=" lg:h-[380px] ">
       <div className="container mx-auto text-white ">
         <div className="mb-[66px]">
           <p className="fw-bold text-[40px] ">Browse Trainers</p>
@@ -16,39 +17,20 @@ const FilterBar = () => {
         </div>
 
         {/* Search */}
-        <div className="flex mt-[40px] justify-between mt-[46px] mb-3">
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 -translate-y-1/2">
-              <Search size={20} />
-            </div>
-            <Input
-              placeholder="Search by name or specialty"
-              className="pl-10 h-[50px] w-[737px]"
-            />
-          </div>
+        <div className="flex flex-wrap mt-[40px] justify-between mt-[46px] mb-3 lg:">
+          <SearchInp />
 
           {/* Filter */}
-          <div className="flex gap-2">
-            <FilterElemnts
-              text="Filter"
-              items={items}
-              label="Filterd By"
-              icon={<Funnel size={16} />}
-            />
-
-            <FilterElemnts
-              text="Sort"
-              items={items}
-              label="Sort By"
-              icon={<ArrowUpDown size={16} />}
-            />
+          <div className="flex gap-3 my-10 lg:my-0 md:ml-auto lg:ml-0">
+            <FilterElemnts />
+            <SortElemnts />
           </div>
         </div>
 
         {/* Clear */}
 
-        <div className="flex justify-between items-center ">
-          <div className="flex gap-2  items-center">
+        <div className="flex flex-wrap justify-between items-center gap-3">
+          <div className="flex flex-wrap gap-2">
             {filteritems.map((ele) => (
               <Button
                 className="bg-[#B6B6B54D] min-w-[170px] flex items-center gap-2 px-3 "
@@ -60,10 +42,8 @@ const FilterBar = () => {
               </Button>
             ))}
           </div>
-
           <p className="cursor-pointer">Clear Filter</p>
         </div>
-
       </div>
     </div>
   );

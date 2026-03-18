@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 @theme {
   --font-sans: "Montserrat", sans-serif;
   --text-caption: 0.75rem;
@@ -47,7 +46,7 @@
   --radius: 0.75rem;
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
-  --card: var(--surface-card);
+  --card: #2d2d2d;
   --card-foreground: var(--text-primary);
   --popover: var(--surface-card);
   --popover-foreground: var(--text-primary);
@@ -77,7 +76,7 @@
 
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
-  --card: var(--surface-card);
+  --card: #2d2d2d;
   --card-foreground: var(--text-primary);
   --popover: var(--surface-card);
   --popover-foreground: var(--text-primary);

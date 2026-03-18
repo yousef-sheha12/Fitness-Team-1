@@ -1,13 +1,13 @@
 import FilterBar from "./Search/FilterBar";
 import TopTrainer from "./TopTrainer/TopTrainer";
+import TrainingCart from "./Tranier/TrainingCart";
 
 const BrowseTrainer = () => {
   return (
     <>
       <FilterBar />
-      <div className="bg-[#121212] lg:h-[500px]">
         <TopTrainer />
-      </div>
+        <TrainingCart />
     </>
   );
 };

@@ -2,13 +2,13 @@
 import { Home } from "@/pages/home/Home";
 import { createBrowserRouter } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
-import Trainers from "@/pages/trainers/Trainers";
 import Packages from "@/pages/packages/Packages";
 import PrivateRoute from "./PrivateRoute";
 import Booking from "@/pages/booking/Booking";
 import ContactUs from "@/pages/contact/ContactUs";
 import Login from "@/pages/auth/Login";
 import MainLayout from "@/layouts/MainLayout";
+import TrainingPage from "@/pages/TrainingPage/TrainingPage";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "trainers",
-        element: <Trainers />,
+        element: <TrainingPage />,
       },
       {
         path: "trainer/:id",
