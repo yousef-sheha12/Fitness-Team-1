@@ -1,5 +1,4 @@
 // router.tsx
-import { Home } from "@/pages/home/Home";
 import { createBrowserRouter } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import Trainers from "@/pages/trainers/Trainers";
@@ -9,6 +8,7 @@ import Booking from "@/pages/booking/Booking";
 import ContactUs from "@/pages/contact/ContactUs";
 import Login from "@/pages/auth/Login";
 import MainLayout from "@/layouts/MainLayout";
+import { Home } from "@/pages/home/Home";
 
 export const router = createBrowserRouter([
   {
