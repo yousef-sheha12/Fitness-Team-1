@@ -9,6 +9,7 @@ import ContactUs from "@/pages/contact/ContactUs";
 import Login from "@/pages/auth/Login";
 import MainLayout from "@/layouts/MainLayout";
 import { Home } from "@/pages/home/Home";
+import StripeWrapper from "@/pages/booking/StripeWrapper";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,16 @@ export const router = createBrowserRouter([
         path: "contact-us",
         element: <ContactUs />,
       },
+      {
+        path: "/booking",
+        // element: <PrivateRoute />,
+        children: [{
+          path: "", element:
+            <StripeWrapper>
+              <Booking />
+            </StripeWrapper>
+        }],
+      },
     ],
   },
   {
@@ -47,9 +58,5 @@ export const router = createBrowserRouter([
       // { path: "info", element: <Info /> },
     ],
   },
-  {
-    path: "/booking",
-    element: <PrivateRoute />, // هنا في المستقبل تحمي الصفحة
-    children: [{ path: "", element: <Booking /> }],
-  },
+
 ]);

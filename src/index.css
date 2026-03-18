@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @theme {
   --font-sans: "Montserrat", sans-serif;
   --text-caption: 0.75rem;
@@ -37,7 +38,7 @@
   --bg-primary: #121212;
   --surface-card: #111827;
   --cta-primary: #ff4d4d;
-  --cta-hover: #e11d48;
+  --cta-hover: #e7000b;
   --success: #22c55e;
   --text-primary: #f9fafb;
   --text-secondary: #9ca3af;
@@ -50,7 +51,7 @@
   --card-foreground: var(--text-primary);
   --popover: var(--surface-card);
   --popover-foreground: var(--text-primary);
-  --primary: var(--cta-primary);
+  --primary: var(--bg-primary);
   --primary-foreground: var(--text-primary);
   --secondary: #1f2432;
   --secondary-foreground: var(--text-primary);
@@ -68,7 +69,7 @@
   --bg-primary: #121212;
   --surface-card: #111827;
   --cta-primary: #ff4d4d;
-  --cta-hover: #e11d48;
+  --cta-hover: #e7000b;
   --success: #22c55e;
   --text-primary: #f9fafb;
   --text-secondary: #9ca3af;
@@ -222,4 +223,39 @@
   .btn-cta {
     @apply bg-cta-primary text-text-primary transition-colors duration-300 hover:bg-cta-hover;
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 200px;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.5s ease forwards;
+  overflow: hidden;
 }
