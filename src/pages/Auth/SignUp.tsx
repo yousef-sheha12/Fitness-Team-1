@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,7 +21,6 @@ export default function SignUp() {
   const onSubmit = (data: signUpFormData) => {
     console.log(data);
   };
-
 
   return (
     <AuthLayout>

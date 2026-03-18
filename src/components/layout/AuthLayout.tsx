@@ -1,5 +1,7 @@
 import bg from "../../assets/auth-bg.png";
-export default function AuthLayout({ children }) {
+import type { childrenType } from "@/lib/types/main.type";
+
+export default function AuthLayout({ children }: childrenType) {
   return (
     <div
       className="relative min-h-screen bg-cover bg-center flex items-center justify-center  py-9"
