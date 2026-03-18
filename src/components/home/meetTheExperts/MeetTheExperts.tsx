@@ -3,40 +3,58 @@ import Button from "@/components/common/Button";
 import TrainerCard from "@/components/common/TrainerCard";
 import { HOME_TRAINERS } from "@/lib/constants/home/trainers.constants";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const ITEMS_PER_VIEW = 3;
+const DESKTOP_BREAKPOINT = 1024;
 
 export default function MeetTheExperts() {
   const [startIndex, setStartIndex] = useState(0);
+  const [itemsPerView, setItemsPerView] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth >= DESKTOP_BREAKPOINT
+      ? 3
+      : 1,
+  );
 
-  const maxStartIndex = Math.max(0, HOME_TRAINERS.length - ITEMS_PER_VIEW);
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerView(window.innerWidth >= DESKTOP_BREAKPOINT ? 3 : 1);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const maxStartIndex = Math.max(0, HOME_TRAINERS.length - itemsPerView);
+  const safeStartIndex = Math.min(startIndex, maxStartIndex);
 
   const visibleTrainers = useMemo(
-    () => HOME_TRAINERS.slice(startIndex, startIndex + ITEMS_PER_VIEW),
-    [startIndex],
+    () => HOME_TRAINERS.slice(safeStartIndex, safeStartIndex + itemsPerView),
+    [safeStartIndex, itemsPerView],
   );
 
   const handlePrev = () => {
-    setStartIndex((prev) => Math.max(0, prev - ITEMS_PER_VIEW));
+    setStartIndex((prev) => Math.max(0, prev - itemsPerView));
   };
 
   const handleNext = () => {
-    setStartIndex((prev) => Math.min(maxStartIndex, prev + ITEMS_PER_VIEW));
+    setStartIndex((prev) => Math.min(maxStartIndex, prev + itemsPerView));
   };
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-center px-3 py-12 md:py-16">
       <SectionHighlight text="our trainers" />
-      <div className="flex justify-between items-center w-full">
-        <h2 className="mt-4 text-left text-h1 font-bold ">
+      <div className="flex justify-between items-center flex-col md:flex-row  w-full">
+        <h2 className="mt-4 text-left text-4xl md:text-h1  font-bold ">
           Meet the <span className="text-cta-primary">Experts</span>
         </h2>
         <div className="flex items-center gap-3">
           <Button
             ariaLabel="Previous trainers"
             className="mt-0 h-14 rounded-2xl py-0"
-            disabled={startIndex === 0}
+            disabled={safeStartIndex === 0}
             icon={<ChevronLeft size={22} />}
             onClick={handlePrev}
             variant="outline"
@@ -46,7 +64,7 @@ export default function MeetTheExperts() {
           <Button
             ariaLabel="Next trainers"
             className="mt-0 h-14 rounded-2xl py-0"
-            disabled={startIndex >= maxStartIndex}
+            disabled={safeStartIndex >= maxStartIndex}
             icon={<ChevronRight size={22} />}
             onClick={handleNext}
             variant="outline"
