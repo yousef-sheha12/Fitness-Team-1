@@ -33,9 +33,9 @@ const SortElemnts = () => {
         style={{ position: undefined }}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#222]">
-          <span className="text-white font-bold text-lg">Sort</span>
+          <span className="text-accent-foreground font-bold text-lg">Sort</span>
           <span
-            className="text-[#ff5c5c] cursor-pointer text-sm font-medium"
+            className="text-accent cursor-pointer text-sm font-medium"
             onClick={() => setOpen(false)}
           >
             Close
@@ -51,8 +51,8 @@ const SortElemnts = () => {
                 option.id !== sortOptions.length ? "border-b border-[#222]" : ""
               } ${
                 selectedSort === option.value
-                  ? "text-[#ff5c5c]"
-                  : "text-white hover:text-[#ff5c5c]"
+                  ? "text-accent"
+                  : "text-accent-foreground hover:text-accent"
               }`}
             >
               <span>{option.label}</span>

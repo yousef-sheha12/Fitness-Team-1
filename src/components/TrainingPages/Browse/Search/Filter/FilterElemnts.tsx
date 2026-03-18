@@ -38,7 +38,7 @@ const FilterElemnts = () => {
           <span className="font-bold text-lg">Filter</span>
 
           <span
-            className="text-[#ff5c5c] cursor-pointer text-sm font-medium w-10 md:w-12 text-right"
+            className="text-accent cursor-pointer text-sm font-medium w-10 md:w-12 text-right"
             onClick={() => setOpen(false)}
           >
             Close
@@ -56,7 +56,7 @@ const FilterElemnts = () => {
               className={`flex items-center justify-between px-2 py-4 cursor-pointer transition-all mb-4 ${
                 selectedFilter === duration.value
                   ? "text-whiter bg-primary"
-                  : "text-white hover:text-[#ff5c5c]"
+                  : "text-accent-foreground hover:text-accent"
               }`}
             >
               <span>{duration.label}</span>
@@ -73,7 +73,7 @@ const FilterElemnts = () => {
               className={`flex items-center justify-between px-2 py-4 cursor-pointer transition-all border  border-[#333]${
                 selectedFilter === duration.value
                   ? "text-whiter bg-primary"
-                  : "text-white hover:text-[#ff5c5c]"
+                  : "text-accent-foreground hover:text-accent"
               }`}
             >
               <span>{duration.label}</span>
@@ -86,7 +86,7 @@ const FilterElemnts = () => {
 
         {/* typ */}
         <div className="border-t border-[#222] px-6 py-4">
-          <p className="text-white font-semibold">Type</p>
+          <p className="text-accent-foreground font-semibold">Type</p>
           <div className="flex gap-3 my-4">
             {types.map((type) => (
               <button
@@ -94,8 +94,8 @@ const FilterElemnts = () => {
                 onClick={() => setSelectedType(type.type)}
                 className={`px-6 py-2 cursor-pointer border transition-all duration-300 ${
                   selectedType === type.type
-                    ? "bg-primary border-primary text-white"
-                    : "bg-transparent border-[#333] text-white hover:border-[#ff5c5c] hover:text-[#ff5c5c]"
+                    ? "bg-primary border-primary text-accent-foreground"
+                    : "bg-transparent border-[#333] text-accent-foreground hover:border-accent hover:text-accent"
                 }`}
               >
                 {type.type}

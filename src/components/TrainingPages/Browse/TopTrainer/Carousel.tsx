@@ -71,7 +71,7 @@ const Carousels = () => {
                 className={cn(
                   "rounded-full transition-all duration-300",
                   i === cur
-                    ? "w-3 h-3 bg-blue-500 shadow-[0_0_10px_white]"
+                    ? "w-3 h-3 bg-accent shadow-[0_0_10px_white]"
                     : "w-2 h-2 bg-[#999999] hover:bg-gray-400",
                 )}
               />
