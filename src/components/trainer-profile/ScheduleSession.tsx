@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function ScheduleSession() {
+  const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>();
   const [selectedTime, setSelectedTime] = useState("");
   const times = ["09:00 AM", "11:00 AM", "01:00 PM", "03:00 PM"];
@@ -18,7 +20,7 @@ export default function ScheduleSession() {
 
         <div className="text-white p-6 rounded-2xl">
           <div className="grid grid-cols-12 gap-6">
-          {/* <div className="flex gap-6"> */}
+            {/* <div className="flex gap-6"> */}
             <div className="bg-zinc-800 rounded-xl p-4 col-span-8">
               <Calendar
                 mode="single"
@@ -40,8 +42,7 @@ export default function ScheduleSession() {
                   selectedTime === time
                     ? "bg-red-500 hover:bg-red-600"
                     : "bg-black text-white hover:bg-zinc-700"
-                }`}
-                >
+                }`}>
                   {time}
                 </Button>
               ))}
@@ -56,7 +57,9 @@ export default function ScheduleSession() {
                 : "No date selected"}
             </p>
 
-            <Button className="bg-primary hover:bg-red-600 px-6">
+            <Button
+              className="bg-primary hover:bg-red-600 px-6"
+              onClick={() => navigate("/booking")}>
               Continue booking →
             </Button>
           </div>

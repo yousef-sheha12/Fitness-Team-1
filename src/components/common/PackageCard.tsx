@@ -1,4 +1,5 @@
 import { HiOutlineCheckCircle } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 interface PackageProps {
   title: string;
@@ -17,11 +18,11 @@ const PackageCard = ({
   isRecommended,
   onClick,
 }: PackageProps) => {
+  const navigate = useNavigate();
   return (
     <div
       onClick={onClick}
-      className={`relative flex flex-col p-8 rounded-2xl border ${isRecommended ? "border-red-500 bg-[#1a1212]" : "border-zinc-800 bg-[#1a1a1a]"} w-full max-w-sm`}
-    >
+      className={`relative flex flex-col p-8 rounded-2xl border ${isRecommended ? "border-red-500 bg-[#1a1212]" : "border-zinc-800 bg-[#1a1a1a]"} w-full max-w-sm`}>
       {isRecommended && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-bold px-4 py-1 rounded-full flex items-center gap-1">
           ✦ Recommended
@@ -43,8 +44,7 @@ const PackageCard = ({
         {features.map((feature, index) => (
           <li
             key={index}
-            className="flex items-center gap-3 text-zinc-300 text-sm"
-          >
+            className="flex items-center gap-3 text-zinc-300 text-sm">
             <span className="text-red-500 text-xs">
               <HiOutlineCheckCircle size={20} />
             </span>
@@ -54,8 +54,8 @@ const PackageCard = ({
       </ul>
 
       <button
-        className={`w-full py-3 rounded-lg font-bold transition-all ${isRecommended ? "bg-red-500 text-white hover:bg-red-600" : "border border-zinc-700 text-white hover:bg-zinc-800"}`}
-      >
+        className={`w-full py-3 rounded-lg font-bold transition-all cursor-pointer ${isRecommended ? "bg-red-500 text-white hover:bg-red-600" : "border border-zinc-700 text-white hover:bg-zinc-800"}`}
+        onClick={() => navigate("/booking")}>
         Book
       </button>
     </div>
