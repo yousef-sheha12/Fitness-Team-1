@@ -43,7 +43,8 @@ export default function TrainerCard({
           {specialties.map((s) => (
             <span
               key={s}
-              className="text-sm text-white bg-bg-overlay rounded-4xl px-2 py-1 font-light">
+              className="text-sm text-white bg-overlay rounded-4xl px-2 py-1 font-light"
+            >
               {s}
             </span>
           ))}
