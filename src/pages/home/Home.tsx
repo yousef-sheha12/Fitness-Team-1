@@ -4,6 +4,7 @@ import MeetTheExperts from "@/components/home/meetTheExperts/MeetTheExperts";
 import PriceSection from "@/components/home/price/PriceSection";
 import WhyEliteSyncSection from "@/components/home/whyEliteSync/WhyEliteSyncSection";
 import TestimonialsSection from "@/components/home/testimonials/TestimonialsSection";
+import CTASection from "@/components/home/cta/CTASection";
 
 export const Home = () => {
   return (
@@ -14,6 +15,7 @@ export const Home = () => {
       <PriceSection />
       <WhyEliteSyncSection />
       <TestimonialsSection />
+      <CTASection />
     </>
   );
 };

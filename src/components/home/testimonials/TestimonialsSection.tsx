@@ -8,7 +8,7 @@ export default function TestimonialsSection() {
     backgroundColor: "var(--dark-mode-surfaces-bg-cards-bg-primary, #121212)",
     backgroundBlendMode: "overlay" as const,
     backgroundImage:
-      "linear-gradient(180deg, rgba(255, 77, 77, 0.8) 0%, #838383 100%)",
+      "linear-gradient(180deg, rgba(255, 77, 77, 0.8) 0%, #0A0A0A 100%)",
   };
 
   return (
