@@ -4,7 +4,7 @@ import Carousels from "./Carousel";
 const TopTrainer = () => {
   return (
     <>
-      <div className="w-full max-w-[812px] mx-auto  mt-20">
+      <div className="w-full max-w-[812px] mx-auto mt-20 lg:mt-10">
         <p className="text-white text-center text-[20px] sm:text-[24px] mb-[40px] sm:mb-[64px]">
           Our top
           <span className="relative inline-flex items-center justify-center align-middle mx-1">
