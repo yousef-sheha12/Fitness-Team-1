@@ -19,10 +19,12 @@ const PackageCard = ({
   onClick,
 }: PackageProps) => {
   const navigate = useNavigate();
+
   return (
     <div
       onClick={onClick}
-      className={`relative flex flex-col p-8 rounded-2xl border ${isRecommended ? "border-red-500 bg-[#1a1212]" : "border-zinc-800 bg-[#1a1a1a]"} w-full max-w-sm`}>
+      className={`relative flex flex-col p-8 rounded-2xl border transition-all ${isRecommended ? "border-red-500 shadow-[0_0_24px_rgba(255,77,77,0.35)]" : "border-zinc-800 bg-[#1a1a1a]"} w-full max-w-sm`}
+    >
       {isRecommended && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-bold px-4 py-1 rounded-full flex items-center gap-1">
           ✦ Recommended
@@ -37,14 +39,15 @@ const PackageCard = ({
 
       <div className="flex justify-between text-zinc-500 text-xs font-medium border-b border-zinc-800 pb-4 mb-6">
         <span>60 MIN</span>
-        <span>{sessions} Sessions</span>
+        <span>{sessions}</span>
       </div>
 
       <ul className="grow space-y-4 mb-8">
         {features.map((feature, index) => (
           <li
             key={index}
-            className="flex items-center gap-3 text-zinc-300 text-sm">
+            className="flex items-center gap-3 text-zinc-300 text-sm"
+          >
             <span className="text-red-500 text-xs">
               <HiOutlineCheckCircle size={20} />
             </span>
@@ -55,7 +58,8 @@ const PackageCard = ({
 
       <button
         className={`w-full py-3 rounded-lg font-bold transition-all cursor-pointer ${isRecommended ? "bg-red-500 text-white hover:bg-red-600" : "border border-zinc-700 text-white hover:bg-zinc-800"}`}
-        onClick={() => navigate("/booking")}>
+        onClick={() => navigate("/booking")}
+      >
         Book
       </button>
     </div>
