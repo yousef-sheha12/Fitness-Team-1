@@ -4,8 +4,18 @@ import TestimonialCard from "./TestimonialCard";
 import { TESTIMONIALS } from "@/lib/constants/home/testimonials.constants";
 
 export default function TestimonialsSection() {
+  const sectionBackgroundStyle = {
+    backgroundColor: "var(--dark-mode-surfaces-bg-cards-bg-primary, #121212)",
+    backgroundBlendMode: "overlay" as const,
+    backgroundImage:
+      "linear-gradient(180deg, rgba(255, 77, 77, 0.8) 0%, #838383 100%)",
+  };
+
   return (
-    <section className="w-full bg-[#0a0a0a] px-4 py-14 md:py-20">
+    <section
+      style={sectionBackgroundStyle}
+      className="w-full px-4 py-14 md:py-20"
+    >
       <div className="mx-auto flex max-w-6xl flex-col items-center text-center">
         <SectionHighlight text="Testimonials" />
 
