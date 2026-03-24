@@ -1,5 +1,4 @@
 import sectionImage from "@/assets/home/section.png";
-import { Sparkles } from "lucide-react";
 import HeaderP from "../HeaderP";
 import WhyEliteSyncFeatureCard from "./WhyEliteSyncFeatureCard";
 import { WHY_ELITE_SYNC_FEATURES } from "@/lib/constants/home/whyEliteSync.constants";

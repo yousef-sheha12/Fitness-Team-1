@@ -3,6 +3,7 @@ import HowToUse from "@/components/home/howToUse/HowToUse";
 import MeetTheExperts from "@/components/home/meetTheExperts/MeetTheExperts";
 import PriceSection from "@/components/home/price/PriceSection";
 import WhyEliteSyncSection from "@/components/home/whyEliteSync/WhyEliteSyncSection";
+import TestimonialsSection from "@/components/home/testimonials/TestimonialsSection";
 
 export const Home = () => {
   return (
@@ -12,6 +13,7 @@ export const Home = () => {
       <MeetTheExperts />
       <PriceSection />
       <WhyEliteSyncSection />
+      <TestimonialsSection />
     </>
   );
 };
