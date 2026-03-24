@@ -19,16 +19,20 @@ export default function CTASection() {
 
         <p className="mt-6 text-lg text-zinc-400">{CTA_SECTION.description}</p>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <div className="mt-8 w-full max-w-md grid grid-cols-2 gap-4 sm:max-w-lg sm:gap-4">
           <Button
+            className="mt-0 rounded-lg"
             text={CTA_SECTION.buttonPrimary.text}
             onClick={() => navigate(CTA_SECTION.buttonPrimary.action)}
             icon={<ArrowRight size={18} />}
+            width="w-full"
           />
           <Button
+            className="mt-0 rounded-lg"
             text={CTA_SECTION.buttonSecondary.text}
             onClick={() => navigate(CTA_SECTION.buttonSecondary.action)}
             variant="outline"
+            width="w-full"
           />
         </div>
 
