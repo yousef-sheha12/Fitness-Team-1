@@ -3,13 +3,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, type signUpFormData } from "@/lib/schemas/signup.schema";
 import InputField from "@/components/Auth/InputField";
-import { Mail, User, Lock } from "lucide-react";
+import { Mail, User, Lock, Phone } from "lucide-react";
 import Button from "@/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "@/lib/api/Auth/auth.api";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -18,8 +22,23 @@ export default function SignUp() {
     resolver: zodResolver(signUpSchema),
   });
 
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: (response) => {
+      login(response.data.user, response.data.token);
+      navigate("/auth/info");
+    },
+  });
+
   const onSubmit = (data: signUpFormData) => {
-    console.log(data);
+    mutate({
+      username: data.name,
+      email: data.email,
+      password: data.password,
+      phone: data.phone,
+      password_confirmation: data.password_confirmation,
+      agree_terms: 1,
+    });
   };
 
   return (
@@ -45,6 +64,14 @@ export default function SignUp() {
             icon={<Mail size={16} />}
           />
           <InputField
+            label="Phone"
+            placeholder="Enter your phone number"
+            type="tel"
+            register={register("phone")}
+            error={errors.phone}
+            icon={<Phone size={16} />}
+          />
+          <InputField
             label="Password"
             placeholder="Enter your password"
             type="password"
@@ -52,7 +79,27 @@ export default function SignUp() {
             error={errors.password}
             icon={<Lock size={16} />}
           />
-          <Button text="Sign Up" type="submit" onClick={() => navigate("/")} />
+          <InputField
+            label="Confirm Password"
+            placeholder="Re-enter your password"
+            type="password"
+            register={register("password_confirmation")}
+            error={errors.password_confirmation}
+            icon={<Lock size={16} />}
+          />
+
+          {error && (
+            <p className="text-red-400 text-sm text-center">
+              Registration failed. Please try again.
+            </p>
+          )}
+
+          <Button
+            text={isPending ? "Creating account..." : "Sign Up"}
+            type="submit"
+            disabled={isPending}
+          />
+          
         </form>
         <p className="font-bold text-(--white-color) flex justify-center items-center gap-2">
           Already have an account?

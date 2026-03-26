@@ -1,7 +1,9 @@
 import CheckedInput from "@/components/Auth/CheckedInput";
 import Button from "@/components/common/Button";
 import AuthLayout from "@/components/layout/AuthLayout";
+import { updateProfile } from "@/lib/api/profile.api";
 import { checkedData } from "@/lib/data/checked.data";
+import { useMutation } from "@tanstack/react-query";
 import { ArrowRight, ChevronUp } from "lucide-react";
 import { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +32,23 @@ export default function Info() {
       goals: form.goals.includes(value)
         ? form.goals.filter((g) => g !== value)
         : [...form.goals, value],
+    });
+  };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: () => {
+      navigate("/");
+    },
+  });
+
+  const handleContinue = () => {
+    mutate({
+      gender: form.gender,
+      fitness_level: form.fitnessLevel,
+      training_type: form.trainingType,
+      frequency: form.frequency,
+      goals: form.goals.join(", "),
     });
   };
 
@@ -153,10 +172,11 @@ export default function Info() {
         </div>
 
         <Button
-          text="Continue"
+          text={isPending ? "Saving..." : "Continue"}
           icon={<ArrowRight size={16} />}
           type="button"
-          onClick={() => navigate("/")}
+          onClick={handleContinue}
+          disabled={isPending}
         />
       </div>
     </AuthLayout>
