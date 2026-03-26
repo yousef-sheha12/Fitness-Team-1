@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import SessionCard from "../common/UserProfile/SessionCard";
+import SessionCard from "../../components/common/UserProfile/SessionCard";
 
 interface Session {
   id: string;
@@ -29,7 +29,8 @@ export default function UpcomingSessions({
         </h2>
         <Link
           to="/sessions/past"
-          className="text-sm sm:text-2xl font-semibold underline text-primary hover:text-primary/80 transition-colors duration-200 shrink-0">
+          className="text-sm sm:text-2xl font-semibold underline text-primary hover:text-primary/80 transition-colors duration-200 shrink-0"
+        >
           View Past Sessions
         </Link>
       </div>

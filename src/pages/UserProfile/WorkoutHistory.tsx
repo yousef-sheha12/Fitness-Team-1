@@ -1,4 +1,4 @@
-import WorkoutRow from "../common/UserProfile/WorkoutRow";
+import WorkoutRow from "../../components/common/UserProfile/WorkoutRow";
 
 export default function WorkoutHistory() {
   return (

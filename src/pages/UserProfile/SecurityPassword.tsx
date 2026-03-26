@@ -1,5 +1,5 @@
 import { LockKeyholeIcon } from "lucide-react";
-import InputField from "../Auth/InputField";
+import InputField from "../../components/Auth/InputField";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, type signUpFormData } from "@/lib/schemas/signup.schema";
@@ -30,7 +30,8 @@ export default function SecurityPassword() {
         <div className="flex flex-col items-center justify-center sm:flex-row gap-4 p-8">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4">
+            className="flex flex-col gap-4"
+          >
             <InputField
               label="Current Password"
               placeholder="Enter your new password"

@@ -1,6 +1,6 @@
 import { Clock, Flame, Package } from "lucide-react";
-import StatBadge from "../common/UserProfile/StatBadge";
-import SessionsOverTime from "../common/UserProfile/SessionOverTime";
+import StatBadge from "../../components/common/UserProfile/StatBadge";
+import SessionsOverTime from "../../components/common/UserProfile/SessionOverTime";
 
 interface ProgressActivityProps {
   sessionComplete: string;

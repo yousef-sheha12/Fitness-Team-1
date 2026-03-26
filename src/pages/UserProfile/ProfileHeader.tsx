@@ -1,7 +1,7 @@
 import userAvatar from "@/assets/user2.jpg";
-import StatBadge from "../common/UserProfile/StatBadge";
+import StatBadge from "../../components/common/UserProfile/StatBadge";
 import { CalendarCheck, Clock, Package } from "lucide-react";
-import ActionButton from "../common/UserProfile/ActionButton";
+import ActionButton from "../../components/common/UserProfile/ActionButton";
 
 interface ProfileHeaderProps {
   name: string;

@@ -1,7 +1,7 @@
 import userAvatar from "@/assets/user2.jpg";
-import InfoTagCard from "../common/UserProfile/InfoTagCard";
+import InfoTagCard from "../../components/common/UserProfile/InfoTagCard";
 import { BowArrow, Dumbbell } from "lucide-react";
-import ActionButton from "../common/UserProfile/ActionButton";
+import ActionButton from "../../components/common/UserProfile/ActionButton";
 
 interface ProfileOverviewProps {
   avatarUrl?: string;
@@ -62,7 +62,6 @@ export default function ProfileOverview({
           <hr className="border-(--gray-color) mt-2 mb-4" />
         </div>
 
-        
         <div className="flex flex-col sm:flex-row gap-4">
           <InfoTagCard
             icon={<BowArrow size={23} className="text-white" />}
