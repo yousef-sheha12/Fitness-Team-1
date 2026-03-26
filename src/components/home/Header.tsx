@@ -15,7 +15,10 @@ export default function Header() {
       <div className="z-10 flex w-full max-w-4xl flex-col items-start px-2 py-5">
         <SectionHighlight text="+50 Certified Elite Trainers" />
         <HeaderH1 />
-        <HeaderP />
+        <HeaderP>
+          Book elite personal training sessions with certified professionals.
+          Science-backed programs tailored to your goals — starting in minutes.
+        </HeaderP>
         <HeaderActions />
         <HeaderStatus />
       </div>
