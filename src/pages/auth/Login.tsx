@@ -1,25 +1,30 @@
 import AuthLayout from "@/components/layout/AuthLayout";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema, type signUpFormData } from "@/lib/schemas/signup.schema";
+import { loginSchema, type loginFormData } from "@/lib/schemas/login.schema";
 import InputField from "@/components/Auth/InputField";
 import { Mail, Lock, LogIn, ArrowRight } from "lucide-react";
 import Button from "@/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<signUpFormData>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<loginFormData>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: signUpFormData) => {
+  const onSubmit = (data: loginFormData) => {
     console.log(data);
+    login();
+    navigate("/");
   };
 
   return (
@@ -63,12 +68,7 @@ export default function Login() {
             Forgot Password?
           </Link>
 
-          <Button
-            text="Login"
-            icon={<ArrowRight size={16} />}
-            type="submit"
-            onClick={() => navigate("/")}
-          />
+          <Button text="Login" icon={<ArrowRight size={16} />} type="submit" />
         </form>
 
         <p className="font-bold text-(--white-color) flex justify-center items-center gap-2">

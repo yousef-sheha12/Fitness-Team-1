@@ -146,6 +146,7 @@
   --text-primary: #f9fafb;
   --text-secondary: #9ca3af;
   --border-subtle: #1f2937;
+  --gradient-grey: #838383;
 
   --radius: 0.75rem;
   --background: var(--bg-primary);
