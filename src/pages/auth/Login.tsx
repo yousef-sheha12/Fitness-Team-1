@@ -8,6 +8,8 @@ import Button from "@/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
 import { useAuth } from "@/hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "@/lib/api/Auth/auth.api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -21,10 +23,19 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (response) => {
+      login(response.data.user, response.data.token);
+      navigate("/");
+    },
+  });
+
   const onSubmit = (data: loginFormData) => {
-    console.log(data);
-    login();
-    navigate("/");
+    mutate({
+      login: data.email,
+      password: data.password,
+    });
   };
 
   return (
@@ -47,9 +58,9 @@ export default function Login() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <InputField
-            label="Email"
-            placeholder="Enter your email"
-            type="email"
+            label="Email or Phone"
+            placeholder="Enter your email or phone"
+            type="text"
             register={register("email")}
             error={errors.email}
             icon={<Mail size={16} />}
@@ -62,13 +73,25 @@ export default function Login() {
             error={errors.password}
             icon={<Lock size={16} />}
           />
+
+          {error && (
+            <p className="text-red-400 text-sm text-center">
+              Invalid email or password. Please try again.
+            </p>
+          )}
+
           <Link
             to="/auth/forgot-password"
             className="text-(--main-color) hover:opacity-80 transition text-end font-semibold">
             Forgot Password?
           </Link>
 
-          <Button text="Login" icon={<ArrowRight size={16} />} type="submit" />
+          <Button
+            text={isPending ? "Logging in..." : "Login"}
+            icon={<ArrowRight size={16} />}
+            type="submit"
+            disabled={isPending}
+          />
         </form>
 
         <p className="font-bold text-(--white-color) flex justify-center items-center gap-2">
