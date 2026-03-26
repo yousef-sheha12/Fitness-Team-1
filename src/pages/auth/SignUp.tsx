@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, type signUpFormData } from "@/lib/schemas/signup.schema";
 import InputField from "@/components/Auth/InputField";
-import { Mail, User, Lock, Phone } from "lucide-react";
+import { Mail, User, Lock } from "lucide-react";
 import Button from "@/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
@@ -25,19 +25,18 @@ export default function SignUp() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
     onSuccess: (response) => {
-      login(response.data.user, response.data.token);
+      login(response.user, response.token);
       navigate("/auth/info");
     },
   });
 
   const onSubmit = (data: signUpFormData) => {
     mutate({
-      username: data.name,
+      name: data.name,
       email: data.email,
       password: data.password,
-      phone: data.phone,
       password_confirmation: data.password_confirmation,
-      agree_terms: 1,
+      role: data.role,
     });
   };
 
@@ -64,14 +63,6 @@ export default function SignUp() {
             icon={<Mail size={16} />}
           />
           <InputField
-            label="Phone"
-            placeholder="Enter your phone number"
-            type="tel"
-            register={register("phone")}
-            error={errors.phone}
-            icon={<Phone size={16} />}
-          />
-          <InputField
             label="Password"
             placeholder="Enter your password"
             type="password"
@@ -88,6 +79,23 @@ export default function SignUp() {
             icon={<Lock size={16} />}
           />
 
+          {/* Role dropdown */}
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-semibold text-(--gray-color)">
+              Role
+            </label>
+            <select
+              {...register("role")}
+              className="h-11 rounded-lg bg-(--darkGrey-color) border border-(--gray-color) text-white px-3 text-sm focus:outline-none focus:border-(--main-color) cursor-pointer">
+              <option value="">Select your role</option>
+              <option value="trainee">Trainee</option>
+              <option value="trainer">Trainer</option>
+            </select>
+            {errors.role && (
+              <p className="text-red-400 text-xs">{errors.role.message}</p>
+            )}
+          </div>
+
           {error && (
             <p className="text-red-400 text-sm text-center">
               Registration failed. Please try again.
@@ -99,8 +107,8 @@ export default function SignUp() {
             type="submit"
             disabled={isPending}
           />
-          
         </form>
+
         <p className="font-bold text-(--white-color) flex justify-center items-center gap-2">
           Already have an account?
           <Link

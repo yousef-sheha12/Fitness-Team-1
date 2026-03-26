@@ -26,14 +26,14 @@ export default function Login() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: loginUser,
     onSuccess: (response) => {
-      login(response.data.user, response.data.token);
+      login(response.user, response.token);
       navigate("/");
     },
   });
 
   const onSubmit = (data: loginFormData) => {
     mutate({
-      login: data.email,
+      email: data.email,
       password: data.password,
     });
   };
