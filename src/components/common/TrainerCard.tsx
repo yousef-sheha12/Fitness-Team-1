@@ -46,7 +46,8 @@ export default function TrainerCard({
           {specialties.map((s) => (
             <span
               key={s}
-              className="text-sm text-white bg-overlay rounded-4xl px-2 py-1 font-light">
+              className="text-sm text-white bg-bg-overlay rounded-4xl px-2 py-1 font-light"
+            >
               {s}
             </span>
           ))}
@@ -55,7 +56,10 @@ export default function TrainerCard({
           <MapPin size={16} className="text-primary" />
           <span className="text-white">{location}</span>
         </div>
-        <Button text="View Profile →" onClick={() => navigate("/trainer/:id")} />
+        <Button
+          text="View Profile →"
+          onClick={() => navigate("/trainer/:id")}
+        />
       </div>
     </div>
   );
