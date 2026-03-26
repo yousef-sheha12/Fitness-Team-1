@@ -26,7 +26,7 @@ export default function NavbarActions() {
   const handleLogout = () => {
     logout();
     setOpen(false);
-    navigate("/auth/login");
+    navigate("/auth/signup");
   };
 
   if (isLoggedIn) {

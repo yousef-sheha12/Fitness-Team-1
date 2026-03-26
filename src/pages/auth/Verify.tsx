@@ -1,20 +1,36 @@
 import AuthLayout from "@/components/layout/AuthLayout";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema, type signUpFormData } from "@/lib/schemas/signup.schema";
 import Button from "@/components/common/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Otp from "@/components/Auth/Otp";
+// import { useMutation } from "@tanstack/react-query";
+// import { verifyOtp } from "@/lib/api/Auth/auth.api";
+import { useState } from "react";
+
+function maskEmail(email: string) {
+  const [name, domain] = email.split("@");
+  return `${name[0]}***@${domain}`;
+}
 
 export default function Verify() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email") ?? "";
+  const [code, setCode] = useState("");
 
-  const { handleSubmit } = useForm<signUpFormData>({
-    resolver: zodResolver(signUpSchema),
-  });
+  // const { mutate, isPending, error } = useMutation({
+  //   mutationFn: verifyOtp,
+  //   onSuccess: () => {
+  //     localStorage.removeItem("token");
+  //     navigate("/auth/login");
+  //   },
+  // });
 
-  const onSubmit = (data: signUpFormData) => {
-    console.log(data);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (code.length === 6) {
+      localStorage.removeItem("temp_token");
+      navigate("/auth/login");
+    }
   };
 
   return (
@@ -25,28 +41,22 @@ export default function Verify() {
             Enter Verification Code
           </h2>
           <p className="text-(--gray-color) text-md font-semibold">
-            Please enter code that we have sent to your email
+            We sent a code to{" "}
+            <span className="text-(--white-color)">{maskEmail(email)}</span>
           </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-          <Otp />
 
-          <Button
-            text="Verify"
-            type="submit"
-            onClick={() => navigate("/auth/info")}
-          />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <Otp onChange={setCode} />
+
+          {/* {error && (
+            <p className="text-red-400 text-sm text-center">
+              Invalid or expired OTP. Please try again.
+            </p>
+          )} */}
+
+          <Button text="Verify" type="submit" disabled={code.length < 6} />
         </form>
-        <Link
-          to="/auth/login"
-          className="flex items-center justify-center text-(--main-color)
-          font-bold gap-2 rounded-md cursor-pointer hover:opacity-90
-          transition text-sm">
-          <p className="text-(--color-text-secondary)">
-            Don’t receive the code?
-          </p>{" "}
-          <span>Resend 00:34</span>
-        </Link>
       </div>
     </AuthLayout>
   );

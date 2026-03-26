@@ -35,7 +35,7 @@ export default function Info() {
     });
   };
 
-  const { mutate, isPending } = useMutation({
+  const { isPending } = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
       navigate("/");
@@ -43,13 +43,15 @@ export default function Info() {
   });
 
   const handleContinue = () => {
-    mutate({
-      gender: form.gender,
-      fitness_level: form.fitnessLevel,
-      training_type: form.trainingType,
-      frequency: form.frequency,
-      goals: form.goals.join(", "),
-    });
+    // mutate({
+    //   gender: form.gender,
+    //   fitness_level: form.fitnessLevel,
+    //   training_type: form.trainingType,
+    //   frequency: form.frequency,
+    //   goals: form.goals.join(", "),
+    // });
+
+    navigate("/");
   };
 
   return (

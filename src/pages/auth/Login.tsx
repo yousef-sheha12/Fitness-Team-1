@@ -27,7 +27,7 @@ export default function Login() {
     mutationFn: loginUser,
     onSuccess: (response) => {
       login(response.user, response.token);
-      navigate("/");
+      navigate("/info");
     },
   });
 

@@ -33,6 +33,22 @@ export interface RegisterPayload {
   role: string;
 }
 
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
+export interface VerifyOtpPayload {
+  email: string;
+  code: string;
+}
+
+export interface ResetPasswordPayload {
+  email: string;
+  code: string;
+  password: string;
+  password_confirmation: string;
+}
+
 export const loginUser = async (
   payload: LoginPayload,
 ): Promise<AuthResponse> => {
@@ -49,4 +65,28 @@ export const registerUser = async (
 
 export const logout = async (): Promise<void> => {
   await client.post("/logout");
+};
+
+export const verifyOtp = async (
+  payload: VerifyOtpPayload,
+): Promise<{ status: boolean; message: string }> => {
+  const { data } = await client.post("/verify-otp", payload);
+  return data;
+};
+
+export const forgotPassword = async (
+  payload: ForgotPasswordPayload,
+): Promise<void> => {
+  await client.post("/forgot-password", payload);
+};
+
+export const getProfile = async (): Promise<{ user: AuthUser }> => {
+  const { data } = await client.get("/profile");
+  return data;
+};
+
+export const resetPassword = async (
+  payload: ResetPasswordPayload,
+): Promise<void> => {
+  await client.post("/reset-password", payload);
 };
