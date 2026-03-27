@@ -9,7 +9,7 @@ const TrainingCart = () => {
     SetLoad((pre) => pre + 6);
   };
   return (
-    <div className="bg-gradient-to-b from-[#1F0D0D] to-[#141212] min-h-screen lg:min-h-[1299px] pb-10 w-full ">
+    <div className="bg-gradient-to-b from-[#1F0D0D] to-[#1c1717] min-h-screen lg:min-h-[1299px] pb-10 w-full ">
       <div className="w-full px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl pt-[58px]">
         <p className="text-[32px] text-center sm:text-start">
           Meet Our <span className="text-primary">Trainers</span>

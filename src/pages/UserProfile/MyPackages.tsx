@@ -1,6 +1,6 @@
 import { Check, Package } from "lucide-react";
 import ActionButton from "@/components/common/UserProfile/ActionButton";
-import ProgressBar from "../common/UserProfile/ProgressBar";
+import ProgressBar from "../../components/common/UserProfile/ProgressBar";
 
 interface Package {
   name: string;
@@ -37,7 +37,8 @@ export default function MyPackages({ pack, onUpgrade }: MyPackagesProps) {
                   pack.status === "Active"
                     ? "bg-green-500/20 text-green-400"
                     : "bg-gray-500/20 text-gray-400"
-                }`}>
+                }`}
+              >
                 {pack.status}
               </span>
             </div>
@@ -67,7 +68,8 @@ export default function MyPackages({ pack, onUpgrade }: MyPackagesProps) {
             {pack.includes.map((feature) => (
               <span
                 key={feature}
-                className="flex items-center gap-2 text-base sm:text-lg text-white">
+                className="flex items-center gap-2 text-base sm:text-lg text-white"
+              >
                 <Check size={18} className="text-primary shrink-0" />
                 {feature}
               </span>
