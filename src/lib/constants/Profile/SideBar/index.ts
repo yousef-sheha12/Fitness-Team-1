@@ -17,12 +17,12 @@ type MenuItem = {
 };
 export const menuItems: MenuItem[] = [
   {
-    label: "ProfileOverview",
+    label: "Profile Overview",
     path: "/profile/ProfileOverview",
     icon: User,
   },
   {
-    label: "ProfileHeader",
+    label: "Profile Header",
     path: "/profile/ProfileHeader",
     icon: User,
   },

@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
-import PrivateRoute from "./PrivateRoute";
 import Booking from "@/pages/booking/Booking";
 import ContactUs from "@/pages/contact/ContactUs";
 import MainLayout from "@/layouts/MainLayout";

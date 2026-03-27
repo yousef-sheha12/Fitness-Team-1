@@ -22,7 +22,6 @@ const location = useLocation();
           </div>
         </div>
 
-        {/* Sub Routes  */}
         <nav className="py-2 flex flex-col gap-2">
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -46,9 +45,7 @@ const location = useLocation();
             );
           })}
         </nav>
-        {/* Sub Routes  */}
       </aside>
-      {/* Web  */}
     </>
   );
 }
