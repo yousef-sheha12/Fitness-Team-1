@@ -7,6 +7,7 @@ import {
   CreditCard,
   Receipt,
   ShieldCheck,
+  Dumbbell,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -17,49 +18,48 @@ type MenuItem = {
 };
 export const menuItems: MenuItem[] = [
   {
-    label: "Profile Overview",
-    path: "/profile/ProfileOverview",
+    label: "Personal Info",
+    path: "/profile/overview",
     icon: User,
   },
-  {
-    label: "Profile Header",
-    path: "/profile/ProfileHeader",
-    icon: User,
-  },
-
   {
     label: "Profile Information",
-    path: "/profile/PersonalInfoForm",
+    path: "/profile/personal-info",
     icon: FileText,
   },
   {
     label: "Sessions",
-    path: "/profile/UpcomingSessions",
+    path: "/profile/sessions",
     icon: CalendarClock,
   },
   {
     label: "My Packages",
-    path: "/profile/MyPackages",
+    path: "/profile/packages",
     icon: Package,
   },
   {
     label: "Progress & Activity",
-    path: "/profile/ProgressActivity",
+    path: "/profile/progress",
     icon: Activity,
   },
   {
+    label: "Workout History",
+    path: "/profile/workout-history",
+    icon: Dumbbell,
+  },
+  {
     label: "Payment Methods",
-    path: "/profile/PaymentMethods",
+    path: "/profile/payment",
     icon: CreditCard,
   },
   {
     label: "Billing History",
-    path: "/profile/BillingHistory",
+    path: "/profile/billing",
     icon: Receipt,
   },
   {
     label: "Security & Password",
-    path: "/profile/SecurityPassword",
+    path: "/profile/security",
     icon: ShieldCheck,
   },
 ];

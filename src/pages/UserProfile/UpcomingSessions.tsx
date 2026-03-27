@@ -16,11 +16,48 @@ interface UpcomingSessionsProps {
   onViewDetails?: (id: string) => void;
 }
 
+const mockSessions: Session[] = [
+  {
+    id: "1",
+    sessionName: "Strength Training",
+    trainerName: "Sarah Jenkins",
+    date: "Tomorrow",
+    time: "9:00 AM - 10:00 AM",
+    location: "Downtown Gym",
+  },
+  {
+    id: "2",
+    sessionName: "Cardio Blast",
+    trainerName: "Ahmed Nour",
+    date: "Friday",
+    time: "7:00 AM - 8:00 AM",
+    location: "Online",
+  },
+  {
+    id: "3",
+    sessionName: "Flexibility & Core",
+    trainerName: "Lina Hassan",
+    date: "Saturday",
+    time: "11:00 AM - 12:00 PM",
+    location: "Maadi Sports Club",
+  },
+  {
+    id: "4",
+    sessionName: "Pilates",
+    trainerName: "Lina Hassan",
+    date: "Saturday",
+    time: "11:00 AM - 12:00 PM",
+    location: "Online",
+  },
+];
+
 export default function UpcomingSessions({
   sessions,
   onReschedule,
   onViewDetails,
 }: UpcomingSessionsProps) {
+  const displaySessions = sessions.length > 0 ? sessions : mockSessions;
+
   return (
     <div className="flex flex-col gap-6 px-4 sm:px-10">
       <div className="flex items-center justify-between gap-4">
@@ -29,14 +66,13 @@ export default function UpcomingSessions({
         </h2>
         <Link
           to="/sessions/past"
-          className="text-sm sm:text-2xl font-semibold underline text-primary hover:text-primary/80 transition-colors duration-200 shrink-0"
-        >
+          className="text-sm sm:text-2xl font-semibold underline text-primary hover:text-primary/80 transition-colors duration-200 shrink-0">
           View Past Sessions
         </Link>
       </div>
 
-      <div className="flex flex-col gap-4 mt-4 sm:mt-8">
-        {sessions.map((session) => (
+      <div className="flex flex-col gap-4 sm:mt-4">
+        {displaySessions.map((session) => (
           <SessionCard
             key={session.id}
             sessionName={session.sessionName}

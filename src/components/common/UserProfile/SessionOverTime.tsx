@@ -24,12 +24,14 @@ const data = [
 
 export default function SessionsOverTime() {
   return (
-    <div className="border border-primary rounded-xl p-4 sm:p-6 mx-4 sm:mx-10">
-      <h2 className="text-xl sm:text-2xl font-medium text-white mb-4">
+    <div className="border border-primary rounded-xl p-5 sm:p-7">
+      <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">
         Sessions Over Time
       </h2>
       <ResponsiveContainer width="100%" height={250}>
-        <AreaChart data={data}>
+        <AreaChart
+          data={data}
+          margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="sessionGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#FF4D4D" stopOpacity={0.3} />

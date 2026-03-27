@@ -1,25 +1,30 @@
+// ProgressBar.tsx
 interface ProgressBarProps {
   current: number;
   total: number;
 }
 
 export default function ProgressBar({ current, total }: ProgressBarProps) {
-  const percentage = Math.min((current / total) * 100, 100);
+  const completed = total - current;
+  const percentage = Math.min((completed / total) * 100, 100);
 
   return (
-    <div className="flex flex-col gap-2">
-      <span className="text-white text-2xl font-semibold">{current}</span>
-      <div className="flex items-center justify-between text-xl">
-        <span className="text-white text-xl font-normal">
-          Sessions Remaining Out Of {total}
-        </span>
-        <span className="text-primary text-xl font-normal">
-          {total - current} Completed
+    <div className="flex flex-col gap-3">
+      <div className="flex items-end justify-between">
+        <div>
+          <span className="text-3xl font-bold text-white">{current}</span>
+          <span className="text-sm text-(--gray-color) ml-2">
+            sessions remaining
+          </span>
+        </div>
+        <span className="text-sm font-semibold text-primary">
+          {completed} / {total} completed
         </span>
       </div>
-      <div className="w-full h-3 bg-[#D9D9D9] rounded-full overflow-hidden">
+
+      <div className="w-full h-2.5 bg-(--gray-color)/20 rounded-full overflow-hidden">
         <div
-          className="h-full bg-primary rounded-full transition-all duration-500"
+          className="h-full bg-primary rounded-full transition-all duration-700 ease-out"
           style={{ width: `${percentage}%` }}
         />
       </div>

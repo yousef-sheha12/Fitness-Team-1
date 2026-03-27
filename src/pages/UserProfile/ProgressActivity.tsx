@@ -14,27 +14,29 @@ export default function ProgressActivity({
   nextSession,
 }: ProgressActivityProps) {
   return (
-    <div className="flex flex-col gap-6 px-10">
-      <div className="flex items-center justify-between">
-        <h2 className="text-4xl font-bold text-white">Progress & Activity</h2>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-5 mt-2">
+    <div className="flex flex-col gap-6 px-4 sm:px-10">
+      <h2 className="text-2xl sm:text-3xl font-bold text-white">
+        Progress & Activity
+      </h2>
+
+      <div className="flex flex-col sm:flex-row gap-4">
         <StatBadge
-          icon={<Flame size={38} />}
-          label={"Current Streak"}
-          value={String(sessionComplete)}
+          icon={<Flame size={24} />}
+          label="Current Streak"
+          value={sessionComplete}
         />
         <StatBadge
-          icon={<Package size={38} />}
-          label={"Total Sessions"}
+          icon={<Package size={24} />}
+          label="Total Sessions"
           value={activePackage}
         />
         <StatBadge
-          icon={<Clock size={38} />}
-          label={"Avg. Weekly"}
+          icon={<Clock size={24} />}
+          label="Avg. Weekly"
           value={nextSession}
         />
       </div>
+
       <SessionsOverTime />
     </div>
   );

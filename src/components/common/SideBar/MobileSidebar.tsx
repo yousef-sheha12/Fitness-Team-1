@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { menuItems } from "@/lib/constants/Profile/SideBar";
-import {  LogOut, X } from "lucide-react";
+import { LogOut, X } from "lucide-react";
 import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import userAvatar from "@/assets/user2.jpg";
+import { useAuth } from "@/hooks/useAuth";
 
 interface MobileSidebarProps {
   open: boolean;
@@ -11,29 +12,33 @@ interface MobileSidebarProps {
 }
 
 const MobileSideBar = ({ open, onClose }: MobileSidebarProps) => {
-  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Close Sidebar when path name change
+  const location = useLocation();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth/signup");
+  };
+  
   useEffect(() => {
     onClose();
   }, [location.pathname]);
 
   return (
     <div
-      className={`fixed inset-0 z-[100] lg:hidden  ${open ? "block" : "hidden"}`}
-    >
+      className={`fixed inset-0 z-[100] lg:hidden  ${open ? "block" : "hidden"}`}>
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       <aside
         className={`absolute top-0 left-0 h-screen w-[280px] bg-card shadow-2xl flex flex-col duration-300 transition-all ${
           open ? "translate-x-0" : "-translate-x-72"
-        }`}
-      >
+        }`}>
         {/* Header profile */}
         <div className="p-5 bg-primary relative overflow-hidden">
           <Button
             onClick={onClose}
-            className="ms-auto w-fit block   cursor-pointer"
-          >
+            className="ms-auto w-fit block   cursor-pointer">
             <X className="w-full cursor-pointer" />
           </Button>
 
@@ -64,13 +69,11 @@ const MobileSideBar = ({ open, onClose }: MobileSidebarProps) => {
                   isActive
                     ? "bg-primary text-primary-foreground font-medium shadow-md"
                     : "text-card-foreground hover:bg-muted hover:translate-x-1 "
-                }`}
-              >
+                }`}>
                 <div
                   className={`w-8 h-8 rounded-md flex items-center justify-center shrink-0 ${
                     isActive ? "bg-primary-foreground/15" : "bg-muted"
-                  }`}
-                >
+                  }`}>
                   <item.icon className="w-4 h-4" />
                 </div>
                 {item.label}
@@ -82,9 +85,9 @@ const MobileSideBar = ({ open, onClose }: MobileSidebarProps) => {
         {/* Footer */}
         <div className="p-4 border-t border-border">
           <Button
-            variant={"secondary"}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors cursor-pointer"
-          >
+            variant="secondary"
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors cursor-pointer">
             <LogOut className="w-4 h-4" />
             Log Out
           </Button>
