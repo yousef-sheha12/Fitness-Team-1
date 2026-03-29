@@ -1,9 +1,9 @@
 import AuthLayout from "@/components/layout/AuthLayout";
 import Button from "@/components/common/Button";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Otp from "@/components/Auth/Otp";
-// import { useMutation } from "@tanstack/react-query";
-// import { verifyOtp } from "@/lib/api/Auth/auth.api";
+import { useMutation } from "@tanstack/react-query";
+import { verifyOtp } from "@/lib/api/Auth/auth.api";
 import { useState } from "react";
 
 function maskEmail(email: string) {
@@ -13,25 +13,32 @@ function maskEmail(email: string) {
 
 export default function Verify() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
-  const email = searchParams.get("email") ?? "";
+  const isForgotPassword = !!location.state?.email;
+  const email =
+    (location.state?.email as string) || searchParams.get("email") || "";
+
   const [code, setCode] = useState("");
 
-  // const { mutate, isPending, error } = useMutation({
-  //   mutationFn: verifyOtp,
-  //   onSuccess: () => {
-  //     localStorage.removeItem("token");
-  //     navigate("/auth/login");
-  //   },
-  // });
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: verifyOtp,
+    onSuccess: () => {
+      navigate("/auth/reset-password", { state: { email, code } });
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (code.length === 6) {
-      localStorage.removeItem("temp_token");
-      navigate("/auth/login");
-    }
-  };
+ const handleSubmit = (e: React.FormEvent) => {
+   e.preventDefault();
+   if (code.length < 6) return;
+
+   if (isForgotPassword) {
+     mutate({ email, code });
+   } else {
+     localStorage.removeItem("token");
+     navigate("/auth/login");
+   }
+ };
 
   return (
     <AuthLayout>
@@ -41,7 +48,7 @@ export default function Verify() {
             Enter Verification Code
           </h2>
           <p className="text-(--gray-color) text-md font-semibold">
-            We sent a code to{" "}
+            We sent a code to
             <span className="text-(--white-color)">{maskEmail(email)}</span>
           </p>
         </div>
@@ -49,13 +56,17 @@ export default function Verify() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <Otp onChange={setCode} />
 
-          {/* {error && (
+          {error && (
             <p className="text-red-400 text-sm text-center">
               Invalid or expired OTP. Please try again.
             </p>
-          )} */}
+          )}
 
-          <Button text="Verify" type="submit" disabled={code.length < 6} />
+          <Button
+            text={isPending ? "Verifying..." : "Verify"}
+            type="submit"
+            disabled={code.length < 6 || isPending}
+          />
         </form>
       </div>
     </AuthLayout>

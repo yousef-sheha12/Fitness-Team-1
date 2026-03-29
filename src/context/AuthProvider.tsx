@@ -1,41 +1,30 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
 import type { AuthUser } from "@/lib/api/Auth/auth.api";
-// import { getProfile } from "@/lib/api/Auth/auth.api";
+import { getProfile } from "@/lib/api/Auth/auth.api";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+    if (!storedToken) {
+      setLoading(false);
+      return;
     }
-    setLoading(false);
+    getProfile()
+      .then((response) => {
+        setToken(storedToken);
+        setUser(response.user);
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      })
+      .finally(() => setLoading(false));
   }, []);
-  
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem("token");
-  //   if (!storedToken) {
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   getProfile()
-  //     .then((response) => {
-  //       setToken(storedToken);
-  //       setUser(response.user);
-  //     })
-  //     .catch(() => {
-  //       localStorage.removeItem("token");
-  //       localStorage.removeItem("user");
-  //     })
-  //     .finally(() => setLoading(false));
-  // }, []);
 
   const isLoggedIn = !!token;
 
@@ -53,7 +42,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("token");
   };
 
-  if (loading) return null; // or a spinner
+  if (loading) return null;
 
   return (
     <AuthContext.Provider value={{ user, token, isLoggedIn, login, logout }}>

@@ -8,7 +8,7 @@ import Button from "@/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
 import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "@/lib/api/Auth/auth.api";
+import { getGoogleRedirectUrl, registerUser } from "@/lib/api/Auth/auth.api";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -22,9 +22,8 @@ export default function SignUp() {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
-    onSuccess: (response, variables) => {
-      localStorage.setItem("token", response.token);
-      navigate(`/auth/verify?email=${encodeURIComponent(variables.email)}`);
+    onSuccess: () => {
+      navigate("/auth/login");
     },
   });
 
@@ -36,6 +35,11 @@ export default function SignUp() {
       password_confirmation: data.password_confirmation,
       role: data.role,
     });
+  };
+
+  const handleGoogleLogin = async () => {
+    const { url } = await getGoogleRedirectUrl();
+    window.location.href = url;
   };
 
   return (
@@ -77,7 +81,6 @@ export default function SignUp() {
             icon={<Lock size={16} />}
           />
 
-          {/* Role dropdown */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-semibold text-(--gray-color)">
               Role
@@ -124,7 +127,9 @@ export default function SignUp() {
         </div>
         <button
           type="button"
-          className="w-full h-12 rounded-lg bg-(--darkGrey-color) mb-6 cursor-pointer flex items-center justify-center hover:opacity-80 transition">
+          className="w-full h-12 rounded-lg bg-(--darkGrey-color) mb-6 cursor-pointer flex items-center justify-center hover:opacity-80 transition"
+          onClick={handleGoogleLogin}
+        >
           <img src={googleIcon} width={20} height={20} />
         </button>
       </div>

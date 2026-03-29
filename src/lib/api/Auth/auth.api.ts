@@ -67,11 +67,8 @@ export const logout = async (): Promise<void> => {
   await client.post("/logout");
 };
 
-export const verifyOtp = async (
-  payload: VerifyOtpPayload,
-): Promise<{ status: boolean; message: string }> => {
-  const { data } = await client.post("/verify-otp", payload);
-  return data;
+export const verifyOtp = async (payload: VerifyOtpPayload): Promise<void> => {
+  await client.post("/verify-otp", null, { params: payload });
 };
 
 export const forgotPassword = async (
@@ -89,4 +86,9 @@ export const resetPassword = async (
   payload: ResetPasswordPayload,
 ): Promise<void> => {
   await client.post("/reset-password", null, { params: payload });
+};
+
+export const getGoogleRedirectUrl = async (): Promise<{ url: string }> => {
+  const { data } = await client.get("/auth/google/redirect");
+  return data;
 };

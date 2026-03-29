@@ -10,9 +10,16 @@ const client = axios.create({
 
 client.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  console.log("token:", token);
+  const openEndpoints = [
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/verify-otp",
+    "/reset-password",
+  ];
+  const isOpen = openEndpoints.some((ep) => config.url?.includes(ep));
 
-  if (token) {
+  if (token && !isOpen) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
