@@ -45,11 +45,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "info",
-        element: <PrivateRoute />,
-        children: [{ path: "", element: <Info /> }],
-      },
-      {
         path: "profile",
         element: <PrivateRoute />,
         children: [
@@ -164,5 +159,10 @@ export const router = createBrowserRouter([
       { path: "forgot-password", element: <ForgotPassword /> },
       { path: "reset-password", element: <ResetPass /> },
     ],
+  },
+  {
+    path: "info",
+    element: <PrivateRoute />,
+    children: [{ path: "", element: <Info /> }],
   },
 ]);
