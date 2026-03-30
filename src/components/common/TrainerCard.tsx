@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 interface TrainerCardProps {
+  id:number
   image: string;
   name: string;
   rating: number;
-  price: number;
+  experience_years: number;
   specialties: string[];
   location: string;
 }
@@ -15,9 +16,10 @@ export default function TrainerCard({
   image,
   name,
   rating,
-  price,
+  experience_years,
   specialties,
   location,
+  id
 }: TrainerCardProps) {
   const navigate = useNavigate();
 
@@ -27,6 +29,7 @@ export default function TrainerCard({
         <img
           src={image}
           alt={name}
+          loading="lazy"
           className="w-full h-72 object-cover object-top"
         />
         <span className="absolute top-3 right-3 backdrop-blur-sm text-white text-sm font-semibold px-3 py-1.5 rounded-md flex items-center gap-1.5 bg-gray-800/30">
@@ -38,8 +41,8 @@ export default function TrainerCard({
         <div className="flex items-center justify-between">
           <h3 className="text-white font-bold text-lg leading-tight">{name}</h3>
           <p className="text-sm">
-            <span className="text-primary font-bold">EGP {price}</span>
-            <span className="text-white"> /session</span>
+            <span className="text-primary font-bold">{experience_years} Years</span>
+
           </p>
         </div>
         <div className="flex min-h-21 flex-wrap content-start gap-2">
@@ -58,7 +61,7 @@ export default function TrainerCard({
         </div>
         <Button
           text="View Profile →"
-          onClick={() => navigate("/trainer/:id")}
+          onClick={() => navigate(`/trainer/${id}`)}
         />
       </div>
     </div>

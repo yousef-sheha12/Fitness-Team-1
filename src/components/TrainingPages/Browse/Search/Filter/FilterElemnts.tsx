@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Funnel } from "lucide-react";
-import { durations, types } from "@/lib/constants/PageTraning";
 import Button from "@/components/common/Button";
+import { useFilterContext } from "@/context/FilterContext";
+import { useGetFilterValues } from "@/hooks/useGetTerainers";
 
 const FilterElemnts = () => {
-  const [selectedFilter, setSelectedFilter] = useState("Any");
-  const [selectedType, setSelectedType] = useState("");
   const [open, setOpen] = useState(false);
+  const { specializationId, setSpecializationId, setEnabled } = useFilterContext()!;
+
+  const handelFilter = useCallback(() => {
+    setEnabled(true);
+    setOpen(false);
+  }, [setEnabled]);
+
+  const { data } = useGetFilterValues();
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer bg-[#B6B6B533]">
@@ -19,7 +26,7 @@ const FilterElemnts = () => {
         <p>Filter</p>
       </DropdownMenuTrigger>
 
-        <DropdownMenuContent
+      <DropdownMenuContent
         align="end"
         side="bottom"
         onInteractOutside={() => setOpen(false)}
@@ -27,7 +34,7 @@ const FilterElemnts = () => {
         className="
           fixed  -left-23 w-screen
           sm:relative  sm:w-[400px]
-          md:w-[500px] md:left-19 w-screen sm:max-w-[500px]
+          md:w-[500px] md:left-0 w-screen sm:max-w-[500px]
           bg-[#0f0f0f] border-[#222] p-0 rounded-none sm:rounded-md
         "
         style={{ position: undefined }}
@@ -45,67 +52,30 @@ const FilterElemnts = () => {
           </span>
         </div>
 
-        {/* Duration */}
+        {/* specializations */}
         <div className="px-6 py-4 flex flex-col">
-          <span className="  font-semibold my-[24px]">Duration</span>
+          <span className="  font-semibold my-[24px]">Specializations</span>
 
-          {durations.slice(0, 1).map((duration) => (
+          {data?.map((specialization) => (
             <div
-              key={duration.value}
-              onClick={() => setSelectedFilter(duration.value)}
-              className={`flex items-center justify-between px-2 py-4 cursor-pointer transition-all mb-4 ${
-                selectedFilter === duration.value
-                  ? "text-whiter bg-primary"
-                  : "text-accent-foreground hover:text-accent"
-              }`}
-            >
-              <span>{duration.label}</span>
-              {selectedFilter === duration.value && (
-                <span>{duration.value} ✓</span>
-              )}
-            </div>
-          ))}
-
-          {durations.slice(1, 5).map((duration) => (
-            <div
-              key={duration.value}
-              onClick={() => setSelectedFilter(duration.value)}
+              key={specialization.name}
+              onClick={() => setSpecializationId(specialization.id)}
               className={`flex items-center justify-between px-2 py-4 cursor-pointer transition-all border  border-[#333]${
-                selectedFilter === duration.value
+                specializationId === specialization.id
                   ? "text-whiter bg-primary"
                   : "text-accent-foreground hover:text-accent"
               }`}
             >
-              <span>{duration.label}</span>
-              {selectedFilter === duration.value && (
-                <span>{duration.value} ✓</span>
+              <span>{specialization.name}</span>
+              {specializationId === specialization.id && (
+                <span>{specialization.name} ✓</span>
               )}
             </div>
           ))}
-        </div>
-
-        {/* typ */}
-        <div className="border-t border-[#222] px-6 py-4">
-          <p className="text-accent-foreground font-semibold">Type</p>
-          <div className="flex gap-3 my-4">
-            {types.map((type) => (
-              <button
-                key={type.id}
-                onClick={() => setSelectedType(type.type)}
-                className={`px-6 py-2 cursor-pointer border transition-all duration-300 ${
-                  selectedType === type.type
-                    ? "bg-primary border-primary text-accent-foreground"
-                    : "bg-transparent border-[#333] text-accent-foreground hover:border-accent hover:text-accent"
-                }`}
-              >
-                {type.type}
-              </button>
-            ))}
-          </div>
         </div>
 
         <div className="px-6 pb-6">
-          <Button text="Show Results" onClick={() => setOpen(false)} />
+          <Button text="Show Results" onClick={handelFilter} />
         </div>
       </DropdownMenuContent>
     </DropdownMenu>
