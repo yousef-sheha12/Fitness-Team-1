@@ -66,7 +66,7 @@ export default function Verify() {
             text={isPending ? "Verifying..." : "Verify"}
             type="submit"
             disabled={code.length < 6 || isPending}
-          />
+          /> 
         </form>
       </div>
     </AuthLayout>
