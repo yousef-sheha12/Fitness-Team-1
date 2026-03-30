@@ -10,6 +10,7 @@ import NotFoundSearch from "../NotFound/NotFoundSearch";
 import { useSearchParams } from "react-router-dom";
 import { useFilterContext } from "@/context/FilterContext";
 import { SkeletonCard } from "./Loading/SkeletonCard";
+import NotLoggedIn from "../../../common/NotLogiin/NotLoggedIn";
 
 const TrainingCart = () => {
   const { durationId, specializationId, enabled } = useFilterContext()!;
@@ -40,8 +41,11 @@ const TrainingCart = () => {
   const handleMore = () => {
     SetLoad((pre) => pre + 3);
   };
+  const token = localStorage.getItem("token");
+  if (!token) return <NotLoggedIn />;
   return (
     <>
+    
       {search && searchResults?.length === 0 && !searchLoading ? (
         <div className="flex flex-column justify-center items-center text-center">
           <NotFoundSearch />
