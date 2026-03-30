@@ -1,8 +1,4 @@
-import type {
-  FilterTrainer,
-  SearchResponse,
-  TrainerResponse,
-} from "@/lib/types/TrainigTypes";
+import type { TrainerResponse, FilterValues } from "@/lib/types/TrainigTypes";
 import client from "../client";
 
 // All Trainers
@@ -21,17 +17,19 @@ export const getSearchResults = async (
     params: { search_value: params },
   });
 
-  return response.data.data.flatMap((item: SearchResponse) =>
-    item.trainers.map((trainer) => ({
-      id: trainer.id,
-      name: trainer.user.name,
-      profile_image: trainer.user.profile_image,
-      bio: trainer.bio,
-      experience_years: trainer.experience_years,
-      location: trainer.location,
-      rating: trainer.rating,
-    })),
-  );
+  const data = response.data.data;
+
+  if (!data || data.length === 0) return [];
+
+  return data.map((user: TrainerResponse) => ({
+    id: user.trainer_id,
+    name: user.name,
+    profile_image: user.profile_image,
+    rating: user.rating ?? 0,
+    location: user.location,
+    specializations: user.specializations ?? [],
+    experience_years: user.experience_years ?? 0,
+  }));
 };
 
 // Filter
@@ -45,14 +43,24 @@ export const getFilterResults = async (
       specializationId,
     },
   });
-  console.log("filter response:", response.data);
+  const data = response.data.data;
 
-  return response.data.data.map((trainer: FilterTrainer) => ({
-    id: trainer.id,
-    name: trainer.user.name,
-    profile_image: trainer.user.profile_image,
-    experience_years: trainer.experience_years,
-    location: trainer.location,
-    rating: trainer.rating,
+  if (!data || data.length === 0) return [];
+
+  return data.map((user: TrainerResponse) => ({
+    id: user.trainer_id,
+    name: user.name,
+    profile_image: user.profile_image,
+    rating: user.rating ?? 0,
+    location: user.location,
+    specializations: user.specializations ?? [],
+    experience_years: user.experience_years ?? 0,
   }));
+};
+
+// Get Filter Values
+export const getFilterValues = async (): Promise<FilterValues[]| undefined> => {
+  const response = await client.get("/specializations");
+  
+  return response.data.data;
 };

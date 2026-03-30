@@ -5,7 +5,7 @@ import {
   useGetSearch,
   useGetTerainers,
 } from "@/hooks/useGetTerainers";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import NotFoundSearch from "../NotFound/NotFoundSearch";
 import { useSearchParams } from "react-router-dom";
 import { useFilterContext } from "@/context/FilterContext";
@@ -25,14 +25,24 @@ const TrainingCart = () => {
   const [Params] = useSearchParams();
   const search = Params.get("search") || "";
   const loading = isLoading || searchLoading || filterLoading;
-  const data = searchResults || (enabled ? filterResults : null) || trainers;
+
+  const data = useMemo(() => {
+    if (search && enabled && searchResults && filterResults) {
+      return searchResults.filter((trainer) =>
+        filterResults.some((f) => f.id === trainer.id),
+      );
+    }
+    if (search) return searchResults;
+    if (enabled) return filterResults;
+    return trainers;
+  }, [search, enabled, searchResults, filterResults, trainers]);
 
   const handleMore = () => {
     SetLoad((pre) => pre + 3);
   };
   return (
     <>
-      {search && searchResults?.length === 0 ? (
+      {search && searchResults?.length === 0 && !searchLoading ? (
         <div className="flex flex-column justify-center items-center text-center">
           <NotFoundSearch />
         </div>
@@ -53,12 +63,13 @@ const TrainingCart = () => {
                     .map((trainer) => (
                       <TrainerCard
                         key={trainer.id}
+                        id={trainer.id}
                         name={trainer.name}
                         image={trainer.profile_image}
-                        rating={+trainer.rating}
-                        location={trainer.location}
+                        rating={+trainer.rating || 4.5}
+                        location={trainer.location || "Cario, Egypt"}
                         specialties={trainer.specializations ?? []}
-                        price={trainer.experience_years * 30}
+                        experience_years={trainer.experience_years || 10}
                       />
                     ))}
             </div>

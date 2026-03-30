@@ -1,29 +1,24 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Funnel } from "lucide-react";
-import { specializations, experienceYears } from "@/lib/constants/PageTraning";
 import Button from "@/components/common/Button";
 import { useFilterContext } from "@/context/FilterContext";
+import { useGetFilterValues } from "@/hooks/useGetTerainers";
 
 const FilterElemnts = () => {
   const [open, setOpen] = useState(false);
-  const {
-    
-    durationId,
-    specializationId,
-    setdurationIdr,
-    setSpecializationId,
-    setEnabled,
-  } = useFilterContext()!;
+  const { specializationId, setSpecializationId, setEnabled } = useFilterContext()!;
 
-  const handelFilter = () => {
+  const handelFilter = useCallback(() => {
     setEnabled(true);
     setOpen(false);
-  };
+  }, [setEnabled]);
+
+  const { data } = useGetFilterValues();
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer bg-[#B6B6B533]">
@@ -57,63 +52,26 @@ const FilterElemnts = () => {
           </span>
         </div>
 
-        {/* Duration */}
+        {/* specializations */}
         <div className="px-6 py-4 flex flex-col">
-          <span className="  font-semibold my-[24px]">Duration</span>
+          <span className="  font-semibold my-[24px]">Specializations</span>
 
-          {experienceYears.slice(0, 1).map((experienceYear) => (
+          {data?.map((specialization) => (
             <div
-              key={experienceYear.value}
-              onClick={() => setdurationIdr(experienceYear.id)}
-              className={`flex items-center justify-between px-2 py-4 cursor-pointer transition-all mb-4 ${
-                durationId === experienceYear.id
-                  ? "text-whiter bg-primary"
-                  : "text-accent-foreground hover:text-accent"
-              }`}
-            >
-              <span>{experienceYear.label}</span>
-              {durationId === experienceYear.id && (
-                <span>{experienceYear.value} ✓</span>
-              )}
-            </div>
-          ))}
-
-          {experienceYears.slice(1, 5).map((experienceYear) => (
-            <div
-              key={experienceYear.value}
-              onClick={() => setdurationIdr(experienceYear.id)}
+              key={specialization.name}
+              onClick={() => setSpecializationId(specialization.id)}
               className={`flex items-center justify-between px-2 py-4 cursor-pointer transition-all border  border-[#333]${
-                durationId === experienceYear.id
+                specializationId === specialization.id
                   ? "text-whiter bg-primary"
                   : "text-accent-foreground hover:text-accent"
               }`}
             >
-              <span>{experienceYear.label}</span>
-              {durationId === experienceYear.id && (
-                <span>{experienceYear.value} ✓</span>
+              <span>{specialization.name}</span>
+              {specializationId === specialization.id && (
+                <span>{specialization.name} ✓</span>
               )}
             </div>
           ))}
-        </div>
-
-        {/* typ */}
-        <div className="border-t border-[#222] px-6 py-4">
-          <p className="text-accent-foreground font-semibold">Type</p>
-          <div className="flex flex-wrap gap-3 my-4">
-            {specializations.map((specialization) => (
-              <button
-                key={specialization.id}
-                onClick={() => setSpecializationId(specialization.id)}
-                className={`px-6 py-2 cursor-pointer border transition-all duration-300 ${
-                  specializationId === specialization.id
-                    ? "bg-primary border-primary text-accent-foreground"
-                    : "bg-transparent border-[#333] text-accent-foreground hover:border-accent hover:text-accent"
-                }`}
-              >
-                {specialization.name}
-              </button>
-            ))}
-          </div>
         </div>
 
         <div className="px-6 pb-6">

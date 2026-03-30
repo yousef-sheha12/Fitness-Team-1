@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import SearchDropDown from "./SearchDropDown";
@@ -6,20 +6,23 @@ import { useSearchParams } from "react-router-dom";
 
 const SearchInp = () => {
   const [open, setOpen] = useState(false);
-  const [Params, setParams] = useSearchParams();
-  const [search, setSearch] = useState("");
+  const [searchParams, setParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("search") || "");
 
   // Handle Search
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearch(value);
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setSearch(value);
 
-    if (value) {
-      setParams(new URLSearchParams({ search: value }));
-    } else {
-      setParams(new URLSearchParams());
-    }
-  };
+      if (value) {
+        setParams(new URLSearchParams({ search: value }));
+      } else {
+        setParams(new URLSearchParams());
+      }
+    },
+    [setParams],
+  );
 
   return (
     <div className="relative w-full mx-auto   sm:mx-0  sm:p-0 sm:w-[737px]">
