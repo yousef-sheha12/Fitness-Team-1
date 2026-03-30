@@ -1,6 +1,5 @@
 import { filteritems } from "@/lib/constants/PageTraning";
 import { Button } from "@/components/ui/button";
-import SortElemnts from "./Filter/SortElemnts";
 import { X } from "lucide-react";
 import FilterElemnts from "./Filter/FilterElemnts";
 import SearchInp from "./SearchInp/SearchInp";
@@ -8,10 +7,13 @@ import SearchInp from "./SearchInp/SearchInp";
 const FilterBar = () => {
   return (
     <div className=" lg:h-[380px] ">
-      <div className="container mx-auto text-white px-8 ">
-        <div className="mb-[66px]">
-          <p className="fw-bold text-[40px] ">Browse Trainers</p>
-          <p className="text-[24px]">
+      <div className="container mx-auto text-white px-4 ">
+        <div className="mb-8 sm:mb-12 lg:mb-16">
+          <p className="font-bold text-2xl sm:text-3xl lg:text-4xl">
+            Browse Trainers
+          </p>
+
+          <p className=" sm:text-lg lg:text-xl mt-2">
             Find the perfect trainer by browsing through our list of experts
           </p>
         </div>
@@ -21,9 +23,8 @@ const FilterBar = () => {
           <SearchInp />
 
           {/* Filter */}
-          <div className="flex gap-3 my-10 lg:my-0 md:ml-auto lg:ml-0">
+          <div className="my-10 lg:my-0 md:ml-auto lg:ml-0">
             <FilterElemnts />
-            <SortElemnts />
           </div>
         </div>
 
