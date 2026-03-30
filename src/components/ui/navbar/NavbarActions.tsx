@@ -1,66 +1,49 @@
-import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserCircle, LogOut, User, ChevronDown } from "lucide-react";
+import { UserCircle, Menu } from "lucide-react";
 import { NAVBAR_ACTIONS } from "@/lib/constants/navbar/navbar.constants";
 import { useAuth } from "@/hooks/useAuth";
+import MobileSideBar from "@/components/common/SideBar/MobileSidebar";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import userAvatar from "@/assets/user2.jpg";
 
 export default function NavbarActions() {
-  const { isLoggedIn, logout } = useAuth();
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleLogout = () => {
-    logout();
-    setOpen(false);
-    navigate("/auth/login");
-  };
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   if (isLoggedIn) {
     return (
-      <div className="relative" ref={dropdownRef}>
-        <button
-          onClick={() => setOpen((prev) => !prev)}
-          className="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-white/5 transition-colors duration-200 cursor-pointer">
-          <UserCircle size={28} className="text-primary" />
-          <ChevronDown
-            size={14}
-            className={`text-text-secondary transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          />
-        </button>
+      <>
+        <div className="hidden lg:block">
+          <button
+            onClick={() => navigate("/profile/overview")}
+            className="relative group cursor-pointer">
+            {!imgError ? (
+              <img
+                src={userAvatar}
+                alt="Profile"
+                onError={() => setImgError(true)}
+                className="w-9.5 h-9.5 mt-1 rounded-2xl object-cover ring-2 ring-transparent group-hover:ring-primary transition-all duration-200"
+              />
+            ) : (
+              <UserCircle size={36} className="text-primary" />
+            )}
+            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-background" />
+          </button>
+        </div>
 
-        {open && (
-          <div className="absolute right-0 top-12 w-44 bg-[#1f1f1f] border border-border-subtle rounded-xl overflow-hidden shadow-lg z-50">
-            <Link
-              to="/profile"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-sm text-text-primary hover:bg-white/5 transition-colors duration-200">
-              <User size={15} className="text-primary" />
-              My Profile
-            </Link>
-            <hr className="border-border-subtle" />
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-white/5 transition-colors duration-200 cursor-pointer">
-              <LogOut size={15} className="text-red-400" />
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
+        <div className="lg:hidden">
+          <Button
+            onClick={() => setMobileOpen((prev) => !prev)}
+            className="border rounded-lg">
+            <Menu />
+          </Button>
+        </div>
+
+        <MobileSideBar onClose={() => setMobileOpen(false)} open={mobileOpen} />
+      </>
     );
   }
 

@@ -1,6 +1,6 @@
 export interface PackageProps {
   title: string;
-  price: string;
+  price: number;
   sessions: string;
   features: string[];
   isRecommended?: boolean;
@@ -8,18 +8,15 @@ export interface PackageProps {
 export interface RawPackageFromAPI {
   id: number;
   title: string;
+  price: number;
   sessions: number;
-  features: {
-    progress_tracking?: boolean;
-    nutrition_plan?: boolean;
-    priority_booking?: boolean;
-    full_access?: boolean;
-  };
+  duration_days: number;
+  features: string[];
 }
 export interface PackageType {
   id: number;
   title: string;
-  price: string;
+  price: number;
   sessions: string;
   features: string[];
 }

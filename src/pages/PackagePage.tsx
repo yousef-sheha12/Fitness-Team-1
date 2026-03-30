@@ -19,18 +19,17 @@ const PackagePage = () => {
         Authorization: `Bearer ${token}`,
       };
 
-      const response = await fetch(
-        "https://round10-backend-fitness.huma-volve.com/api/packages",
-        { headers },
-      );
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/packages`, {
+        headers,
+      });
 
       const responseData = await response.json();
-      const packages = responseData.data || responseData || [];
+      const packages = responseData.data || [];
 
       return packages.map((pkg: RawPackageFromAPI) => ({
         id: pkg.id,
         title: pkg.title + " Pack",
-        price: "EGP " + pkg.id * 100, // Demo price mapping
+        price: "EGP " + pkg.price,
         sessions: pkg.sessions + " SESSIONS",
         features: pkg.features,
       })) as (PackageType & { id: number })[];
@@ -49,7 +48,7 @@ const PackagePage = () => {
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto h-120">
+      <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto">
         {packages.map((pkg) => (
           <PackageCard
             key={pkg.id}

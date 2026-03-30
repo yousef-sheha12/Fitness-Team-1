@@ -3,17 +3,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, type signUpFormData } from "@/lib/schemas/signup.schema";
 import InputField from "@/components/Auth/InputField";
-import { Mail, User, Lock, Phone } from "lucide-react";
+import { Mail, User, Lock } from "lucide-react";
 import Button from "@/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
 import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "@/lib/api/Auth/auth.api";
-import { useAuth } from "@/hooks/useAuth";
+import { getGoogleRedirectUrl, registerUser } from "@/lib/api/Auth/auth.api";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -24,21 +22,24 @@ export default function SignUp() {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
-    onSuccess: (response) => {
-      login(response.data.user, response.data.token);
-      navigate("/auth/info");
+    onSuccess: () => {
+      navigate("/auth/login");
     },
   });
 
   const onSubmit = (data: signUpFormData) => {
     mutate({
-      username: data.name,
+      name: data.name,
       email: data.email,
       password: data.password,
-      phone: data.phone,
       password_confirmation: data.password_confirmation,
-      agree_terms: 1,
+      role: data.role,
     });
+  };
+
+  const handleGoogleLogin = async () => {
+    const { url } = await getGoogleRedirectUrl();
+    window.location.href = url;
   };
 
   return (
@@ -64,14 +65,6 @@ export default function SignUp() {
             icon={<Mail size={16} />}
           />
           <InputField
-            label="Phone"
-            placeholder="Enter your phone number"
-            type="tel"
-            register={register("phone")}
-            error={errors.phone}
-            icon={<Phone size={16} />}
-          />
-          <InputField
             label="Password"
             placeholder="Enter your password"
             type="password"
@@ -88,6 +81,22 @@ export default function SignUp() {
             icon={<Lock size={16} />}
           />
 
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-semibold text-(--gray-color)">
+              Role
+            </label>
+            <select
+              {...register("role")}
+              className="h-11 rounded-lg bg-(--darkGrey-color) border border-(--gray-color) text-white px-3 text-sm focus:outline-none focus:border-(--main-color) cursor-pointer">
+              <option value="">Select your role</option>
+              <option value="trainee">Trainee</option>
+              <option value="trainer">Trainer</option>
+            </select>
+            {errors.role && (
+              <p className="text-red-400 text-xs">{errors.role.message}</p>
+            )}
+          </div>
+
           {error && (
             <p className="text-red-400 text-sm text-center">
               Registration failed. Please try again.
@@ -99,8 +108,8 @@ export default function SignUp() {
             type="submit"
             disabled={isPending}
           />
-          
         </form>
+
         <p className="font-bold text-(--white-color) flex justify-center items-center gap-2">
           Already have an account?
           <Link
@@ -118,7 +127,9 @@ export default function SignUp() {
         </div>
         <button
           type="button"
-          className="w-full h-12 rounded-lg bg-(--darkGrey-color) mb-6 cursor-pointer flex items-center justify-center hover:opacity-80 transition">
+          className="w-full h-12 rounded-lg bg-(--darkGrey-color) mb-6 cursor-pointer flex items-center justify-center hover:opacity-80 transition"
+          onClick={handleGoogleLogin}
+        >
           <img src={googleIcon} width={20} height={20} />
         </button>
       </div>
