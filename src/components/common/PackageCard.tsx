@@ -1,14 +1,6 @@
+import type { PackageProps } from "@/lib/types/package-types";
 import { HiOutlineCheckCircle } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-
-interface PackageProps {
-  title: string;
-  price: string;
-  sessions: string;
-  features: string[];
-  isRecommended?: boolean;
-  onClick: () => void;
-}
 
 const PackageCard = ({
   title,
@@ -16,13 +8,11 @@ const PackageCard = ({
   sessions,
   features,
   isRecommended,
-  onClick,
 }: PackageProps) => {
   const navigate = useNavigate();
 
   return (
     <div
-      onClick={onClick}
       className={`relative flex flex-col p-8 rounded-2xl border transition-all ${isRecommended ? "border-red-500 shadow-[0_0_24px_rgba(255,77,77,0.35)]" : "border-zinc-800 bg-[#1a1a1a]"} w-full max-w-sm`}
     >
       {isRecommended && (
@@ -33,7 +23,7 @@ const PackageCard = ({
 
       <h3 className="text-xl font-bold text-white mb-4">{title}</h3>
       <div className="mb-2">
-        <span className="text-3xl font-bold text-red-500">EGP {price}</span>
+        <span className="text-3xl font-bold text-red-500"> {price}</span>
         <span className="text-zinc-400 text-sm ml-1">/ package</span>
       </div>
 
