@@ -3,7 +3,6 @@ import {
   Controller,
   type FieldValues,
   type Path,
-  type FieldError,
 } from "react-hook-form";
 import CheckedInput from "@/components/Auth/CheckedInput";
 
@@ -12,9 +11,9 @@ interface Props<T extends FieldValues> {
   name: Path<T>;
   options: readonly string[];
   control: Control<T>;
-  error?: FieldError;
+  error?: string;
   onChangeTransform?: (value: string) => unknown;
-  valueTransform?: (fieldValue: unknown, item: string) => boolean;
+  valueTransform?: (fieldValue: any, item: string) => boolean;
 }
 
 export default function RadioGroup<T extends FieldValues>({
@@ -56,7 +55,7 @@ export default function RadioGroup<T extends FieldValues>({
           </>
         )}
       />
-      {error && <p className="text-red-400 text-xs">{error.message}</p>}
+      {error && <p className="text-red-400 text-xs">{error}</p>}
     </div>
   );
 }

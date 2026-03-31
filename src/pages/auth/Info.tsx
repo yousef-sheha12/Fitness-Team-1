@@ -110,7 +110,7 @@ export default function Info() {
             name={name}
             options={options}
             control={control}
-            error={errors[name] as { message?: string } | undefined}
+            error={errors[name]?.message}
             {...(name === "fitness_goals" && {
               onChangeTransform: (val) => [val],
               valueTransform: (fieldVal, item) => fieldVal[0] === item,
