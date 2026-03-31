@@ -1,16 +1,18 @@
 import client from "./client";
 
-interface ProfileData {
-  name?: string;
-  phone?: number;
-  birthdate?: string;
-  gender?: string;
-  fitness_level?: string;
-  training_type?: string;
-  frequency?: string;
-  goals?: string;
+interface FitnessProfile {
+  gender: string;
+  age: number;
+  height_cm: number;
+  weight_kg: number;
+  fitness_goal: string;
+  fitness_level: string;
+  workout_location: string;
+  preferred_training_days: string;
 }
 
-export const updateProfile = async (payload: ProfileData): Promise<void> => {
-  await client.patch("/api/v1/profile", payload);
+export const saveFitnessProfile = async (
+  payload: FitnessProfile,
+): Promise<void> => {
+  await client.post("/profile/fitness-profile", payload);
 };

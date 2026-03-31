@@ -24,21 +24,20 @@ export default function Verify() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: verifyOtp,
     onSuccess: () => {
-      navigate("/auth/reset-password", { state: { email, code } });
+      if (isForgotPassword) {
+        navigate("/auth/reset-password", { state: { email, code } });
+      } else {
+        localStorage.removeItem("token");
+        navigate("/auth/login");
+      }
     },
   });
 
- const handleSubmit = (e: React.FormEvent) => {
-   e.preventDefault();
-   if (code.length < 6) return;
-
-   if (isForgotPassword) {
-     mutate({ email, code });
-   } else {
-     localStorage.removeItem("token");
-     navigate("/auth/login");
-   }
- };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (code.length < 6) return;
+    mutate({ email, code });
+  };
 
   return (
     <AuthLayout>
@@ -66,7 +65,7 @@ export default function Verify() {
             text={isPending ? "Verifying..." : "Verify"}
             type="submit"
             disabled={code.length < 6 || isPending}
-          /> 
+          />
         </form>
       </div>
     </AuthLayout>

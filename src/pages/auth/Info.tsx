@@ -1,62 +1,98 @@
-import CheckedInput from "@/components/Auth/CheckedInput";
+import RadioGroup from "@/components/Auth/RadioGroup";
+import NumberInput from "@/components/Auth/NumberInput";
 import Button from "@/components/common/Button";
 import AuthLayout from "@/components/layout/AuthLayout";
-import { updateProfile } from "@/lib/api/profile.api";
+import { saveFitnessProfile } from "@/lib/api/profile.api";
 import { checkedData } from "@/lib/data/checked.data";
+import { infoSchema, type InfoFormData } from "@/lib/schemas/info.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { ArrowRight, ChevronUp } from "lucide-react";
-import { useReducer, useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const intialState = {
-  gender: "",
-  fitnessLevel: "",
-  trainingType: "",
-  frequency: "",
-  goals: [] as string[],
-};
+const RADIO_FIELDS = [
+  {
+    label: "What is your gender?",
+    name: "gender",
+    options: checkedData.gender,
+  },
+  {
+    label: "What is your current fitness level?",
+    name: "fitness_level",
+    options: checkedData.fitnessLevel,
+  },
+  {
+    label: "How would you like to train?",
+    name: "workout_location",
+    options: checkedData.workoutLocation,
+  },
+  {
+    label: "How often do you plan to train?",
+    name: "preferred_training_days",
+    options: checkedData.preferredTrainingDays,
+  },
+  {
+    label: "What are your fitness goals?",
+    name: "fitness_goals",
+    options: checkedData.fitnessGoals,
+  },
+] as const;
+
+const NUMBER_FIELDS = [
+  { label: "Age", field: "age", placeholder: "e.g. 25", min: 10, max: 100 },
+  {
+    label: "Height (cm)",
+    field: "height_cm",
+    placeholder: "e.g. 175",
+    min: 100,
+    max: 250,
+  },
+  {
+    label: "Weight (kg)",
+    field: "weight_kg",
+    placeholder: "e.g. 70",
+    min: 30,
+    max: 300,
+  },
+] as const;
 
 export default function Info() {
   const navigate = useNavigate();
-  const [goalsOpen, setGoalsOpen] = useState(false);
-  const [form, dispatch] = useReducer(
-    (state: typeof intialState, action: Partial<typeof intialState>) => ({
-      ...state,
-      ...action,
-    }),
-    intialState,
-  );
 
-  const handleChange = (value: string) => {
-    dispatch({
-      goals: form.goals.includes(value)
-        ? form.goals.filter((g) => g !== value)
-        : [...form.goals, value],
-    });
-  };
-
-  const { isPending } = useMutation({
-    mutationFn: updateProfile,
-    onSuccess: () => {
-      navigate("/");
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<InfoFormData>({
+    resolver: zodResolver(infoSchema),
+    defaultValues: {
+      gender: "",
+      fitness_level: "",
+      workout_location: "",
+      preferred_training_days: "",
+      fitness_goals: [],
+      age: 0,
+      height_cm: 0,
+      weight_kg: 0,
     },
   });
 
-  const handleContinue = () => {
-    // mutate({
-    //   gender: form.gender,
-    //   fitness_level: form.fitnessLevel,
-    //   training_type: form.trainingType,
-    //   frequency: form.frequency,
-    //   goals: form.goals.join(", "),
-    // });
+  const { mutate, isPending } = useMutation({
+    mutationFn: saveFitnessProfile,
+    onSuccess: () => navigate("/"),
+  });
 
-    navigate("/");
-  };
+  const onSubmit = (data: InfoFormData) =>
+    mutate({
+      ...data,
+      fitness_goal: data.fitness_goals[0],
+    });
 
   return (
     <AuthLayout>
-      <div className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col gap-4 text-center items-center justify-center">
           <h2 className="font-bold text-4xl text-(--white-color) mt-5">
             Personalize your training experience
@@ -66,121 +102,44 @@ export default function Info() {
             the best trainers for you.
           </p>
         </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-(--white-color) text-sm font-semibold">
-            What is your gender?
-          </p>
-          {checkedData.gender.map((item) => (
-            <CheckedInput
-              key={item}
-              label={item}
-              type="radio"
-              name="gender"
-              value={item}
-              checked={form.gender === item}
-              onChange={(val) => dispatch({ gender: val })}
-            />
-          ))}
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-(--white-color) text-sm font-semibold">
-            What is your current fitness level?
-          </p>
-          {checkedData.fitnessLevel.map((item) => (
-            <CheckedInput
-              key={item}
-              label={item}
-              type="radio"
-              name="fitnessLevel"
-              value={item}
-              checked={form.fitnessLevel === item}
-              onChange={(val) => dispatch({ fitnessLevel: val })}
-            />
-          ))}
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-(--white-color) text-sm font-semibold">
-            How would you like to train?
-          </p>
-          {checkedData.trainingType.map((item) => (
-            <CheckedInput
-              key={item}
-              label={item}
-              type="radio"
-              name="trainingType"
-              value={item}
-              checked={form.trainingType === item}
-              onChange={(val) => dispatch({ trainingType: val })}
-            />
-          ))}
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <p className="text-(--white-color) text-sm font-semibold">
-            How often do you plan to train?
-          </p>
-          {checkedData.frequency.map((item) => (
-            <CheckedInput
-              key={item}
-              label={item}
-              type="radio"
-              name="frequency"
-              value={item}
-              checked={form.frequency === item}
-              onChange={(val) => dispatch({ frequency: val })}
+        {RADIO_FIELDS.map(({ label, name, options }) => (
+          <RadioGroup
+            key={name}
+            label={label}
+            name={name}
+            options={options}
+            control={control}
+            error={errors[name] as { message?: string } | undefined}
+            {...(name === "fitness_goals" && {
+              onChangeTransform: (val) => [val],
+              valueTransform: (fieldVal, item) => fieldVal[0] === item,
+            })}
+          />
+        ))}
+
+        <div className="flex flex-col gap-4">
+          {NUMBER_FIELDS.map(({ label, field, placeholder, min, max }) => (
+            <NumberInput
+              key={field}
+              label={label}
+              field={field}
+              placeholder={placeholder}
+              min={min}
+              max={max}
+              register={register}
+              error={errors[field]}
             />
           ))}
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <p className="text-(--white-color) text-sm font-semibold">
-            What is your primary fitness goal?
-          </p>
-          <div className="rounded-lg bg-(--color-bg-raised) overflow-hidden">
-            <button
-              type="button"
-              onClick={() => setGoalsOpen(!goalsOpen)}
-              className="w-full flex items-center justify-between px-4 py-3 text-(--color-text-secondary) text-sm">
-              <span>
-                {form.goals.length > 0
-                  ? form.goals.join(", ")
-                  : "Select Your Goals!"}
-              </span>
-              <ChevronUp
-                size={18}
-                className={`transition-transform ease ${goalsOpen ? "" : "rotate-180"}`}
-              />
-            </button>
-
-            {goalsOpen && (
-              <div className="flex flex-col">
-                {checkedData.fitnessGoals.map((item, index) => (
-                  <div key={item}>
-                    <CheckedInput
-                      label={item}
-                      type="checkbox"
-                      value={item}
-                      checked={form.goals.includes(item)}
-                      onChange={handleChange}
-                    />
-                    {index < checkedData.fitnessGoals.length - 1 && (
-                      <hr className="border-(--color-text-secondary) opacity-20 mx-4" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
 
         <Button
           text={isPending ? "Saving..." : "Continue"}
           icon={<ArrowRight size={16} />}
-          type="button"
-          onClick={handleContinue}
+          type="submit"
           disabled={isPending}
         />
-      </div>
+      </form>
     </AuthLayout>
   );
 }

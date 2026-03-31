@@ -22,8 +22,9 @@ export default function SignUp() {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
-    onSuccess: () => {
-      navigate("/auth/login");
+    onSuccess: (response, variables) => {
+      localStorage.setItem("token", response.token);
+      navigate(`/auth/verify?email=${encodeURIComponent(variables.email)}`);
     },
   });
 

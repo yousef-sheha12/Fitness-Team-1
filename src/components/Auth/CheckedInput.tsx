@@ -3,7 +3,7 @@ interface CheckProps {
   type: "radio" | "checkbox";
   name?: string;
   value: string;
-  checked: boolean;
+  checked?: boolean;
   onChange: (value: string) => void;
 }
 
