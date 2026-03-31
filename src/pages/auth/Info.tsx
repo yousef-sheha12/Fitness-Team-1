@@ -32,11 +32,6 @@ const RADIO_FIELDS = [
     name: "preferred_training_days",
     options: checkedData.preferredTrainingDays,
   },
-  {
-    label: "What are your fitness goals?",
-    name: "fitness_goals",
-    options: checkedData.fitnessGoals,
-  },
 ] as const;
 
 const NUMBER_FIELDS = [
@@ -72,7 +67,6 @@ export default function Info() {
       fitness_level: "",
       workout_location: "",
       preferred_training_days: "",
-      fitness_goals: [],
       age: 0,
       height_cm: 0,
       weight_kg: 0,
@@ -82,13 +76,21 @@ export default function Info() {
   const { mutate, isPending } = useMutation({
     mutationFn: saveFitnessProfile,
     onSuccess: () => navigate("/"),
+    onError: () => navigate("/"),
   });
 
-  const onSubmit = (data: InfoFormData) =>
+  const onSubmit = (data: InfoFormData) => {
     mutate({
-      ...data,
-      fitness_goal: data.fitness_goals[0],
+      gender: data.gender,
+      age: data.age,
+      height_cm: data.height_cm,
+      weight_kg: data.weight_kg,
+      fitness_goal: "lose_weight",
+      fitness_level: data.fitness_level,
+      workout_location: data.workout_location,
+      preferred_training_days: data.preferred_training_days,
     });
+  };
 
   return (
     <AuthLayout>
@@ -111,10 +113,6 @@ export default function Info() {
             options={options}
             control={control}
             error={errors[name]?.message}
-            {...(name === "fitness_goals" && {
-              onChangeTransform: (val) => [val],
-              valueTransform: (fieldVal, item) => fieldVal[0] === item,
-            })}
           />
         ))}
 

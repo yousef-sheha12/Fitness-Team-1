@@ -5,7 +5,6 @@ export const infoSchema = z.object({
   fitness_level: z.string().min(1, "Please select your fitness level"),
   workout_location: z.string().min(1, "Please select your workout location"),
   preferred_training_days: z.string().min(1, "Please select training days"),
-  fitness_goals: z.array(z.string()).min(1, "Please select at least one goal"),
   height_cm: z
     .number()
     .min(100, "Height must be at least 100 cm")

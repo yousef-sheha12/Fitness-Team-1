@@ -9,9 +9,11 @@ import { Link, useNavigate } from "react-router-dom";
 import googleIcon from "@/assets/icons/google.png";
 import { useMutation } from "@tanstack/react-query";
 import { getGoogleRedirectUrl, registerUser } from "@/lib/api/Auth/auth.api";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -23,7 +25,7 @@ export default function SignUp() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
     onSuccess: (response, variables) => {
-      localStorage.setItem("token", response.token);
+      login(response.user, response.token, response.is_complete_the_profile === 1);
       navigate(`/auth/verify?email=${encodeURIComponent(variables.email)}`);
     },
   });

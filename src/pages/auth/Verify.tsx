@@ -27,8 +27,7 @@ export default function Verify() {
       if (isForgotPassword) {
         navigate("/auth/reset-password", { state: { email, code } });
       } else {
-        localStorage.removeItem("token");
-        navigate("/auth/login");
+        navigate("/info");
       }
     },
   });

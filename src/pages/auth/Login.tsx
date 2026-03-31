@@ -26,8 +26,9 @@ export default function Login() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: loginUser,
     onSuccess: (response) => {
-      navigate("/info");
-      login(response.user, response.token);
+      const profileComplete = response.is_complete_the_profile === 1;
+      login(response.user, response.token, profileComplete);
+      navigate(profileComplete ? "/" : "/info");
     },
   });
 

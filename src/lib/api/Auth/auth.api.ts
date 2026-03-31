@@ -18,6 +18,7 @@ export interface AuthResponse {
   message: string;
   token: string;
   user: AuthUser;
+  is_complete_the_profile: number;
 }
 
 export interface LoginPayload {
