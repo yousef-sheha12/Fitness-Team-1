@@ -1,46 +1,44 @@
 import ComparisonTable from "@/components/common/package/ComparisonTable";
 import PackageCard from "@/components/common/PackageCard";
-import { useState } from "react";
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "@/context/AuthContext";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { MdVerified } from "react-icons/md";
+import type { PackageType, RawPackageFromAPI } from "@/lib/types/package-types";
 
 const PackagePage = () => {
-  const [selectedPackage, setSelectedPackage] = useState("Monthly Pack");
-  const packages = [
-    {
-      title: "Single Pack",
-      price: "150",
-      sessions: "1 SESSION",
-      features: [
-        "Try any Trainer",
-        "No Commitment",
-        "Full Session Access",
-        "Post-Workout Plan",
-      ],
+  const auth = useContext(AuthContext);
+  const token =
+    auth?.token || "4|yrxEfrnyslP7HK55ge7r2pt8to0gCq3lzz6YhMee993dbc51";
+
+  const { data } = useQuery({
+    queryKey: ["packages"],
+    queryFn: async () => {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/packages`, {
+        headers,
+      });
+
+      const responseData = await response.json();
+      const packages = responseData.data || [];
+
+      return packages.map((pkg: RawPackageFromAPI) => ({
+        id: pkg.id,
+        title: pkg.title + " Pack",
+        price: "EGP " + pkg.price,
+        sessions: pkg.sessions + " SESSIONS",
+        features: pkg.features,
+      })) as (PackageType & { id: number })[];
     },
-    {
-      title: "Monthly Pack",
-      price: "1000",
-      sessions: "15 SESSIONS",
-      features: [
-        "Dedicated Trainer",
-        "Nutrition Plan Included",
-        "Progress Tracking",
-        "Priority Scheduling",
-      ],
-    },
-    {
-      title: "Premium Pack",
-      price: "3000",
-      sessions: "50 SESSIONS",
-      features: [
-        "Dedicated Trainer",
-        "Full Coaching Program",
-        "24/7 Trainer Access",
-        "Custom Meal Plans",
-      ],
-    },
-  ];
+    retry: false,
+  });
+
+  const packages: PackageType[] = data || [];
+
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-white py-20 px-4 font-sans">
       <div className="text-center mb-16">
@@ -53,13 +51,12 @@ const PackagePage = () => {
       <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto">
         {packages.map((pkg) => (
           <PackageCard
-            key={pkg.title}
+            key={pkg.id}
             title={pkg.title}
             price={pkg.price}
             sessions={pkg.sessions}
             features={pkg.features}
-            isRecommended={selectedPackage === pkg.title}
-            onClick={() => setSelectedPackage(pkg.title)}
+            isRecommended={pkg.id == 2}
           />
         ))}
       </div>
