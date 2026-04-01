@@ -32,24 +32,17 @@ const RADIO_FIELDS = [
     name: "preferred_training_days",
     options: checkedData.preferredTrainingDays,
   },
+  {
+    label: "What are your fitness goals?",
+    name: "fitness_goals",
+    options: checkedData.fitnessGoals,
+  },
 ] as const;
 
 const NUMBER_FIELDS = [
-  { label: "Age", field: "age", placeholder: "e.g. 25", min: 10, max: 100 },
-  {
-    label: "Height (cm)",
-    field: "height_cm",
-    placeholder: "e.g. 175",
-    min: 100,
-    max: 250,
-  },
-  {
-    label: "Weight (kg)",
-    field: "weight_kg",
-    placeholder: "e.g. 70",
-    min: 30,
-    max: 300,
-  },
+  { label: "Age", field: "age", min: 10, max: 100, unit: "yrs" },
+  { label: "Height", field: "height_cm", min: 100, max: 250, unit: "cm" },
+  { label: "Weight", field: "weight_kg", min: 30, max: 300, unit: "kg" },
 ] as const;
 
 export default function Info() {
@@ -67,30 +60,29 @@ export default function Info() {
       fitness_level: "",
       workout_location: "",
       preferred_training_days: "",
-      age: 0,
-      height_cm: 0,
-      weight_kg: 0,
+      fitness_goals: [],
+      age: undefined,
+      height_cm: undefined,
+      weight_kg: undefined,
     },
   });
 
   const { mutate, isPending } = useMutation({
     mutationFn: saveFitnessProfile,
     onSuccess: () => navigate("/"),
-    onError: () => navigate("/"),
   });
 
-  const onSubmit = (data: InfoFormData) => {
+  const onSubmit = (data: InfoFormData) =>
     mutate({
       gender: data.gender,
       age: data.age,
       height_cm: data.height_cm,
       weight_kg: data.weight_kg,
-      fitness_goal: "lose_weight",
+      fitness_goal: data.fitness_goals[0],
       fitness_level: data.fitness_level,
       workout_location: data.workout_location,
       preferred_training_days: data.preferred_training_days,
     });
-  };
 
   return (
     <AuthLayout>
@@ -113,18 +105,22 @@ export default function Info() {
             options={options}
             control={control}
             error={errors[name]?.message}
+            {...(name === "fitness_goals" && {
+              onChangeTransform: (val) => [val],
+              valueTransform: (fieldVal, item) => fieldVal[0] === item,
+            })}
           />
         ))}
 
         <div className="flex flex-col gap-4">
-          {NUMBER_FIELDS.map(({ label, field, placeholder, min, max }) => (
+          {NUMBER_FIELDS.map(({ label, field, min, max, unit }) => (
             <NumberInput
               key={field}
               label={label}
               field={field}
-              placeholder={placeholder}
               min={min}
               max={max}
+              unit={unit}
               register={register}
               error={errors[field]}
             />

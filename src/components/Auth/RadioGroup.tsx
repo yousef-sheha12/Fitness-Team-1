@@ -32,7 +32,7 @@ export default function RadioGroup<T extends FieldValues>({
         control={control}
         name={name}
         render={({ field }) => (
-          <>
+          <div className="flex flex-wrap gap-2">
             {options.map((item) => (
               <CheckedInput
                 key={item}
@@ -52,7 +52,7 @@ export default function RadioGroup<T extends FieldValues>({
                 }
               />
             ))}
-          </>
+          </div>
         )}
       />
       {error && <p className="text-red-400 text-xs">{error}</p>}
