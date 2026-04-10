@@ -25,8 +25,8 @@ const FilterBar = () => {
     (item) => item.id === specializationId,
   )?.name;
   return (
-    <div className=" lg:h-[380px] ">
-      <div className="container mx-auto text-white px-4 ">
+    <div className="min-h-[300px] lg:min-h-[380px]">
+      <div className="container mx-auto max-w-7xl text-white px-4 sm:px-6 lg:px-8 ">
         <div className="mb-8 sm:mb-12 lg:mb-16">
           <p className="font-bold text-2xl sm:text-3xl lg:text-4xl">
             Browse Trainers
@@ -62,7 +62,7 @@ const FilterBar = () => {
               </Button>
             )}
           </div>
-          {enabled  && (
+          {enabled && (
             <p className="cursor-pointer" onClick={handelClear}>
               Clear Filter
             </p>

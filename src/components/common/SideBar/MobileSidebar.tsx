@@ -21,24 +21,27 @@ const MobileSideBar = ({ open, onClose }: MobileSidebarProps) => {
     logout();
     navigate("/auth/signup");
   };
-  
+
   useEffect(() => {
     onClose();
-  }, [location.pathname]);
+  }, [location.pathname, onClose]);
 
   return (
     <div
-      className={`fixed inset-0 z-[100] lg:hidden  ${open ? "block" : "hidden"}`}>
+      className={`fixed inset-0 z-[100] lg:hidden  ${open ? "block" : "hidden"}`}
+    >
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       <aside
         className={`absolute top-0 left-0 h-screen w-[280px] bg-card shadow-2xl flex flex-col duration-300 transition-all ${
           open ? "translate-x-0" : "-translate-x-72"
-        }`}>
+        }`}
+      >
         {/* Header profile */}
         <div className="p-5 bg-primary relative overflow-hidden">
           <Button
             onClick={onClose}
-            className="ms-auto w-fit block   cursor-pointer">
+            className="ms-auto w-fit block   cursor-pointer"
+          >
             <X className="w-full cursor-pointer" />
           </Button>
 
@@ -69,11 +72,13 @@ const MobileSideBar = ({ open, onClose }: MobileSidebarProps) => {
                   isActive
                     ? "bg-primary text-primary-foreground font-medium shadow-md"
                     : "text-card-foreground hover:bg-muted hover:translate-x-1 "
-                }`}>
+                }`}
+              >
                 <div
                   className={`w-8 h-8 rounded-md flex items-center justify-center shrink-0 ${
                     isActive ? "bg-primary-foreground/15" : "bg-muted"
-                  }`}>
+                  }`}
+                >
                   <item.icon className="w-4 h-4" />
                 </div>
                 {item.label}
@@ -87,7 +92,8 @@ const MobileSideBar = ({ open, onClose }: MobileSidebarProps) => {
           <Button
             variant="secondary"
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors cursor-pointer">
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors cursor-pointer"
+          >
             <LogOut className="w-4 h-4" />
             Log Out
           </Button>

@@ -42,7 +42,7 @@ export default function RadioGroup<T extends FieldValues>({
                 value={item}
                 checked={
                   valueTransform
-                    ? valueTransform(field.value, item)
+                    ? valueTransform(field.value as string, item)
                     : field.value === item
                 }
                 onChange={() =>

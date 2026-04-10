@@ -12,7 +12,7 @@ export default function Header() {
       style={{ backgroundImage: `url(${headerBg})` }}
     >
       <div className="absolute inset-0 bg-bg-primary/80" />
-      <div className="z-10 flex w-full max-w-4xl flex-col items-start px-2 py-5">
+      <div className="z-10 w-full max-w-4xl mx-auto flex flex-col items-center lg:items-start px-4 sm:px-6 py-8 md:py-12 lg:px-8">
         <SectionHighlight text="+50 Certified Elite Trainers" />
         <HeaderH1 />
         <HeaderP>

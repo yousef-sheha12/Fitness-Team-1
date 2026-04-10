@@ -11,13 +11,15 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    const storedProfileComplete = localStorage.getItem("is_profile_complete");
     if (!storedToken) {
       setLoading(false);
       return;
     }
     getProfile()
       .then((response) => {
+        const storedProfileComplete = localStorage.getItem(
+          "is_profile_complete",
+        );
         setToken(storedToken);
         setUser(response.user);
         setIsProfileComplete(storedProfileComplete === "1");
@@ -26,8 +28,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.removeItem("is_profile_complete");
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
   }, []);
 
   const isLoggedIn = !!token;
@@ -54,7 +56,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, isLoggedIn, isProfileComplete, login, logout }}>
+      value={{ user, token, isLoggedIn, isProfileComplete, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

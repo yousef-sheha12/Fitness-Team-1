@@ -33,7 +33,6 @@ export default function ProfileHeader({
   nextSession,
   avatarUrl,
   onAvatarClick,
-  onEditProfile,
 }: ProfileHeaderProps) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -54,7 +53,8 @@ export default function ProfileHeader({
           <div className="flex items-end gap-4">
             <div
               className="relative group cursor-pointer"
-              onClick={onAvatarClick}>
+              onClick={onAvatarClick}
+            >
               <img
                 src={avatarUrl}
                 alt={name}
@@ -83,7 +83,8 @@ export default function ProfileHeader({
             ({ icon: Icon, label, value }) => (
               <div
                 key={label}
-                className="flex flex-col gap-1 rounded-xl bg-muted/50 border border-border/60 px-4 py-3">
+                className="flex flex-col gap-1 rounded-xl bg-muted/50 border border-border/60 px-4 py-3"
+              >
                 <div className="flex items-center gap-1.5 text-muted-foreground">
                   <Icon className="w-4 h-4" />
                   <span className="text-lg font-medium">{label}</span>
