@@ -331,11 +331,11 @@
     @apply bg-cta-primary text-white transition-colors duration-300 hover:bg-cta-hover;
   }
 }
-.profile-heading{
-  @apply text-3xl text-white font-semibold
+.profile-heading {
+  @apply text-3xl text-white font-semibold;
 }
-.primary-btn{
-  @apply text-white bg-primary w-full rounded-md mt-4 cursor-pointer hover:bg-red-500 text-xl transition-colors duration-300 px-2 py-2
+.primary-btn {
+  @apply text-white bg-primary w-full rounded-md mt-4 cursor-pointer hover:bg-red-500 text-xl transition-colors duration-300 px-2 py-2;
 }
 @keyframes fadeIn {
   from {
