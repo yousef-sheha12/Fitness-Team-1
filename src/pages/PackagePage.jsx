@@ -1,41 +1,30 @@
 import ComparisonTable from "@/components/common/package/ComparisonTable";
 import PackageCard from "@/components/common/PackageCard";
-import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { MdVerified } from "react-icons/md";
+import { getPackages } from "@/lib/api/PackagesApi";
 
 const PackagePage = () => {
-  const auth = useAuth();
-  const token =
-    auth?.token || "4|yrxEfrnyslP7HK55ge7r2pt8to0gCq3lzz6YhMee993dbc51";
-
   const { data } = useQuery({
     queryKey: ["packages"],
-    queryFn: async () => {
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/packages`, {
-        headers,
-      });
-
-      const responseData = await response.json();
-      const packages = responseData.data || [];
-
-      return packages.map((pkg) => ({
-        id: pkg.id,
-        title: pkg.title + " Pack",
-        price: "EGP " + pkg.price,
-        sessions: pkg.sessions + " SESSIONS",
-        features: pkg.features,
-      }));
-    },
+    queryFn: getPackages,
     retry: false,
   });
 
-  const packages = data || [];
+  const rawPackages = data || [];
+  const packages = rawPackages.map((pkg) => ({
+    id: pkg.id,
+    title: (pkg.name || pkg.title || "Package") + " Pack",
+    price: "EGP " + pkg.price,
+    sessions: (pkg.duration_days || pkg.sessions || 30) + " SESSIONS",
+    features: pkg.features || [
+      "Personal Training Sessions",
+      "Custom Workout Plan",
+      "Nutrition Guidance",
+      "Progress Tracking",
+    ],
+  }));
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-white py-20 px-4 font-sans">
